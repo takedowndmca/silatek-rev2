@@ -1,56 +1,56 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\WakilDekan;
 
-use Illuminate\View\View;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Repositories\DekanRepository;
 use Illuminate\Http\RedirectResponse;
-use App\Http\Repositories\AdminRepository;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class AccountController extends Controller
 {
-    protected $adminRepository;
+    protected $dekanRepository;
 
-    /**
-     * AccountController constructor.
-     * @param AdminRepository $adminRepository
-     */
-    public function __construct(AdminRepository $adminRepository)
+    public function __construct(DekanRepository $dekanRepository)
     {
-        $this->adminRepository = $adminRepository;
+        $this->dekanRepository = $dekanRepository;
     }
 
     /**
-     * Menampilkan halaman akun admin
+     * Menampilkan halaman akun dekan
+     *
      * @return View
      */
     public function index(): View
     {
-        return view('admin.account', [
-            'user' => $this->adminRepository->getById(auth('admin')->user()->id),
+        return view('dekan.account', [
+            'user' => $this->dekanRepository->getById(auth('dekan')->user()->id),
         ]);
     }
 
     /**
-     * Mengupdate data akun admin
+     * Mengupdate data akun dekan
+     *
      * @param Request $request
      * @return RedirectResponse
      */
     public function updateAccount(Request $request): RedirectResponse
     {
         $data = $request->validate([
+            'nuptk' => ['required', 'unique:dekan,nuptk,' . auth('dekan')->user()->id],
             'nama' => ['required'],
-            'email' => ['required', 'email', 'unique:admins,email,' . auth('admin')->user()->id],
+            'email' => ['required', 'email', 'unique:dekan,email,' . auth('dekan')->user()->id],
         ]);
 
-        $this->adminRepository->update(auth('admin')->user()->id, $data);
+        $this->dekanRepository->update(auth('dekan')->user()->id, $data);
 
         return redirect()->back()->with('success', __('strings.profile_updated'));
     }
 
     /**
-     * Mengupdate password akun admin
+     * Mengupdate password akun dekan
+     *
      * @param Request $request
      * @return RedirectResponse
      */
@@ -61,11 +61,11 @@ class AccountController extends Controller
             'password' => ['required', 'confirmed'],
         ]);
 
-        if (!auth('admin')->user()->checkPassword($data['old_password'])) {
+        if (!auth('dekan')->user()->checkPassword($data['old_password'])) {
             return redirect()->back()->with('error', __('passwords.old_password_incorrect'));
         }
 
-        $this->adminRepository->update(auth('admin')->user()->id, $data);
+        $this->dekanRepository->update(auth('dekan')->user()->id, $data);
 
         return redirect()->back()->with('success', __('passwords.updated'));
     }

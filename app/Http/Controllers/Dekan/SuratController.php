@@ -29,37 +29,44 @@ class SuratController extends Controller
         switch ($layanan) {
             case 'bebas-matakuliah':
                 $daftarSurat = SuratAdministrasi::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan);
+                    $query->where('layanan', $layanan)
+                            ->where('status', 'menunggu_dekan');
                 })->paginate(15);
                 break;
             case 'pembimbing-kpi':
                 $daftarSurat = SuratPembimbingKPI::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan);
+                    $query->where('layanan', $layanan)
+                            ->where('status', 'menunggu_dekan');
                 })->paginate(15);
                 break;
             case 'pembimbing-ta':
                 $daftarSurat = SuratPembimbingTA::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan);
+                    $query->where('layanan', $layanan)
+                            ->where('status', 'menunggu_dekan');
                 })->paginate(15);
                 break;
             case 'seminar-kpi':
                 $daftarSurat = SuratSeminarKPI::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan);
+                    $query->where('layanan', $layanan)
+                            ->where('status', 'menunggu_dekan');
                 })->paginate(15);
                 break;
             case 'seminar-proposal':
                 $daftarSurat = SuratSeminarTA::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan);
+                    $query->where('layanan', $layanan)
+                            ->where('status', 'menunggu_dekan');
                 })->paginate(15);
                 break;
             case 'seminar-hasil':
                 $daftarSurat = SuratSeminarTA::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan);
+                    $query->where('layanan', $layanan)
+                            ->where('status', 'menunggu_dekan');
                 })->paginate(15);
                 break;
             case 'seminar-tutup':
                 $daftarSurat = SuratSeminarTA::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan);
+                    $query->where('layanan', $layanan)
+                            ->where('status', 'menunggu_dekan');
                 })->paginate(15);
                 break;
             default:
@@ -126,6 +133,13 @@ class SuratController extends Controller
      */
     public function terima(string $layanan, Pengajuan $pengajuan)
     {
+        if ($pengajuan->status !== 'menunggu_dekan') {
+            return back()->with(
+                'error',
+                'Pengajuan ini belum sampai pada tahap persetujuan Dekan.'
+            );
+        }
+
         $user = auth('dekan')->user();
 
         $ttd = new Tandatangan([
@@ -135,9 +149,14 @@ class SuratController extends Controller
 
         $pengajuan->surat->ttd()->save($ttd);
 
+        $pengajuan->update([
+            'status' => 'selesai',
+        ]);
+
         event(new SuratSelesai($pengajuan));
 
-        return to_route('dekan.surat', $layanan)->with('success', 'Surat berhasil disetujui');
+        return to_route('dekan.surat', $layanan)
+            ->with('success', 'Surat berhasil disetujui dan ditandatangani.');
     }
 
     /**
@@ -149,8 +168,16 @@ class SuratController extends Controller
      */
     public function tolak(string $layanan, Pengajuan $pengajuan)
     {
+        if ($pengajuan->status !== 'menunggu_dekan') {
+            return back()->with(
+                'error',
+                'Pengajuan ini belum sampai pada tahap persetujuan Dekan.'
+            );
+        }
+
         $pengajuan->ditolak = true;
-        $pengajuan->alasan_ditolak = 'Berkas ditolak oleh ' . str_replace('_', ' ', auth('dekan')->user()->jabatan) . '. Silahkan ajukan ulang dengan berkas yang benar.';
+        $pengajuan->alasan_ditolak = 'Berkas ditolak oleh Dekan. Silahkan ajukan ulang dengan berkas yang benar.';
+        $pengajuan->status = 'ditolak';
 
         $pengajuan->surat->delete();
 
@@ -158,6 +185,7 @@ class SuratController extends Controller
 
         event(new PengajuanDitolak($pengajuan));
 
-        return to_route('dekan.surat', $layanan)->with('success', 'Surat berhasil ditolak');
+        return to_route('dekan.surat', $layanan)
+            ->with('success', 'Surat berhasil ditolak');
     }
 }

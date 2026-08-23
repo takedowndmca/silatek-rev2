@@ -121,6 +121,78 @@ return [
       ]
     ],
   ],
+  'wakil_dekan' => [
+    [
+      'active' => 'dashboard',
+      'label' => 'Dashboard',
+      'route' => 'wakil_dekan.dashboard',
+      'route_params' => [],
+      'icon' => 'home',
+    ],
+    [
+      'active' => 'pengumuman',
+      'label' => 'Pengumuman',
+      'route' => 'wakil_dekan.pengumuman',
+      'route_params' => [],
+      'icon' => 'newspaper',
+    ],
+    [
+      'active' => 'mahasiswa',
+      'label' => 'Mahasiswa',
+      'route' => 'wakil_dekan.mahasiswa',
+      'route_params' => [],
+      'icon' => 'user',
+    ],
+    [
+      'active' => 'surat',
+      'label' => 'Surat Pengajuan',
+      'icon' => 'file',
+      'submenu' => [
+        [
+          'active' => 'pembimbing-kpi',
+          'label' => 'Pembimbing KPI',
+          'route' => 'wakil_dekan.surat',
+          'route_params' => ['layanan' => 'pembimbing-kpi'],
+        ],
+        [
+          'active' => 'seminar-kpi',
+          'label' => 'Seminar KPI',
+          'route' => 'wakil_dekan.surat',
+          'route_params' => ['layanan' => 'seminar-kpi'],
+        ],
+        [
+          'active' => 'bebas-matakuliah',
+          'label' => 'Bebas Mata Kuliah',
+          'route' => 'wakil_dekan.surat',
+          'route_params' => ['layanan' => 'bebas-matakuliah'],
+        ],
+        [
+          'active' => 'pembimbing-ta',
+          'label' => 'Pembimbing TA',
+          'route' => 'wakil_dekan.surat',
+          'route_params' => ['layanan' => 'pembimbing-ta'],
+        ],
+        [
+          'active' => 'seminar-proposal',
+          'label' => 'Seminar Proposal',
+          'route' => 'wakil_dekan.surat',
+          'route_params' => ['layanan' => 'seminar-proposal'],
+        ],
+        [
+          'active' => 'seminar-hasil',
+          'label' => 'Seminar Hasil',
+          'route' => 'wakil_dekan.surat',
+          'route_params' => ['layanan' => 'seminar-hasil'],
+        ],
+        [
+          'active' => 'seminar-tutup',
+          'label' => 'Seminar Tutup',
+          'route' => 'wakil_dekan.surat',
+          'route_params' => ['layanan' => 'seminar-tutup'],
+        ],
+      ]
+    ],
+  ],
   'staf' => [
     [
       'active' => 'dashboard',

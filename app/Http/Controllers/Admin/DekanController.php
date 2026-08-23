@@ -48,6 +48,7 @@ class DekanController extends Controller
             'nama' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:dekan'],
             'password' => ['required', 'confirmed'],
+            'jabatan' => ['required', 'in:dekan,wakil_dekan'],
         ]);
 
         $this->dekanRepository->create($data);

@@ -139,9 +139,10 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="mahasiswa" class="block text-sm font-medium mb-2">Mahasiswa</label>
-                                        <textarea id="mahasiswa" name="mahasiswa"
+                                       <textarea id="mahasiswa" name="mahasiswa"
                                             class="py-2 px-3 sm:py-3 sm:px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                                            rows="3"></textarea>
+                                            rows="3"
+                                            >{{ $pengajuan->nama }} / {{ $pengajuan->nim }}</textarea>
                                         <span class="text-gray-500 text-sm mt-1">Masukkan data mahasiswa dengan format
                                             (Nama / NIM) dan dipisahkan
                                             dengan baris baru</span>
@@ -160,12 +161,23 @@
                                             class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                                             required>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="waktuInput" class="block text-sm font-medium mb-2">Waktu</label>
-                                        <input type="text" id="waktuInput" name="waktu"
-                                            class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                                            required>
-                                    </div>
+                                   <div class="mb-3">
+    <label for="waktuInput" class="block text-sm font-medium mb-2">
+        Waktu
+    </label>
+
+    <input
+        type="time"
+        id="waktuInput"
+        name="waktu"
+        class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
+        required
+    >
+
+    <span class="text-gray-500 text-sm mt-1">
+        Durasi ujian otomatis 1 jam.
+    </span>
+</div>
                                     <div class="mb-3">
                                         <label for="tempatInput" class="block text-sm font-medium mb-2">Tempat</label>
                                         <input type="text" id="tempatInput" name="tempat"
@@ -247,4 +259,35 @@
             </div>
         </div>
     </div>
+
+@push('scripts')
+    <script>
+        document.getElementById('waktuInput').addEventListener('change', function () {
+            const waktuMulai = this.value;
+
+            if (!waktuMulai) {
+                return;
+            }
+
+            const [jam, menit] = waktuMulai.split(':').map(Number);
+
+            const mulai = new Date();
+            mulai.setHours(jam, menit, 0, 0);
+
+            const selesai = new Date(mulai);
+            selesai.setHours(selesai.getHours() + 1);
+
+            const formatWaktu = (date) => {
+                return String(date.getHours()).padStart(2, '0') + '.' +
+                       String(date.getMinutes()).padStart(2, '0');
+            };
+
+            this.value = waktuMulai;
+
+            // Buat/ubah tampilan waktu selesai
+            document.getElementById('waktuSelesai').textContent =
+                `${formatWaktu(mulai)} - ${formatWaktu(selesai)}`;
+        });
+    </script>
+@endpush
 </x-layouts.dashboard>

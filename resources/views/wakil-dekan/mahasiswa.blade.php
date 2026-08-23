@@ -6,10 +6,10 @@
     </script>
 @endpush
 
-<x-layouts.dashboard title="Staf">
+<x-layouts.dashboard title="Mahasiswa">
     <div class="card">
         <div class="flex items-center justify-between mb-4">
-            <h1 class="text-xl font-semibold text-gray-800">Daftar Staf</h1>
+            <h1 class="text-xl font-semibold text-gray-800">Daftar Mahasiswa</h1>
             <button aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-offcanvas-right"
                 data-hs-overlay="#hs-offcanvas-right"
                 class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-500 text-white hover:bg-red-700 focus:outline-hidden focus:bg-red-700 disabled:opacity-50 disabled:pointer-events-none">
@@ -22,7 +22,7 @@
                 <div
                     class="flex justify-between items-center py-3 px-4 border-b border-gray-200 dark:border-neutral-700">
                     <h3 id="hs-offcanvas-right-label" class="font-bold text-gray-800 dark:text-white">
-                        Form Staf
+                        Form Mahasiswa
                     </h3>
                     <button type="button"
                         class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-hidden focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600"
@@ -37,13 +37,13 @@
                     </button>
                 </div>
                 <div class="p-4">
-                    <form action="{{ route('admin.dekan.store') }}" method="post">
+                    <form action="{{ route('dekan.mahasiswa.store') }}" method="post">
                         @csrf
                         <div class="mb-4">
-                            <label for="nuptkInput" class="block text-sm font-medium mb-2">NUPTK</label>
-                            <input type="text" id="nuptkInput" name="nuptk"
+                            <label for="nimInput" class="block text-sm font-medium mb-2">Nomor Induk Mahasiswa</label>
+                            <input type="text" id="nimInput" name="nim"
                                 class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                                placeholder="Masukkan nuptk" required>
+                                placeholder="Masukkan NIM" required>
                         </div>
                         <div class="mb-4">
                             <label for="namaInput" class="block text-sm font-medium mb-2">Nama Lengkap</label>
@@ -56,19 +56,6 @@
                             <input type="email" id="emailInput" name="email"
                                 class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                                 placeholder="Masukkan email" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="jabatanInput" class="block text-sm font-medium mb-2">
-                                Jabatan
-                            </label>
-
-                            <select id="jabatanInput" name="jabatan"
-                                class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
-                                required>
-                                <option value="" selected disabled>Pilih Jabatan</option>
-                                <option value="dekan">Dekan</option>
-                                <option value="wakil_dekan">Wakil Dekan</option>
-                            </select>
                         </div>
                         <div class="mb-4">
                             <label class="block text-sm mb-2" for="passwordInput">Password</label>
@@ -137,6 +124,29 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="mb-3">
+                            <label for="prodiSelect" class="block text-sm font-medium mb-2">Program Studi</label>
+                            <select id="prodiSelect" name="prodi_id"
+                                class="py-3 px-4 pe-9 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                                required>
+                                <option value="" hidden selected>Pilih</option>
+                                @foreach ($daftarProdi as $prodi)
+                                    <option value="{{ $prodi->id }}">{{ $prodi->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="noTelpInput" class="block text-sm font-medium mb-2">Nomor Telepon</label>
+                            <input type="text" id="noTelpInput" name="no_telp"
+                                class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                                placeholder="Masukkan No. Telp" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="angkatanInput" class="block text-sm font-medium mb-2">Angkatan</label>
+                            <input type="text" id="angkatanInput" name="angkatan"
+                                class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                                placeholder="Masukkan Angkatan" required>
+                        </div>
 
                         <button type="submit"
                             class="w-full mt-3 py-2 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-500 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
@@ -152,9 +162,10 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>NUPTK</th>
+                        <th>NIM</th>
                         <th>Nama</th>
-                        <th>Email</th>
+                        <th>Program Studi</th>
+                        <th>Angkatan</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -162,16 +173,17 @@
                     @foreach ($users as $user)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $user->nuptk }}</td>
+                            <td>{{ $user->nim }}</td>
                             <td>{{ $user->nama }}</td>
-                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->prodi->nama }}</td>
+                            <td>{{ $user->angkatan }}</td>
                             <td class="whitespace-nowrap text-end text-sm font-medium">
                                 <button type="button"
-                                    onclick="location.href = '{{ route('admin.dekan.edit', $user->id) }}'"
+                                    onclick="location.href = '{{ route('dekan.mahasiswa.edit', $user->id) }}'"
                                     class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-hidden focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">
                                     Edit
                                 </button>
-                                <form action="{{ route('admin.dekan.destroy', $user->id) }}" method="post"
+                                <form action="{{ route('dekan.mahasiswa.destroy', $user->id) }}" method="post"
                                     class="inline">
                                     @method('DELETE')
                                     @csrf

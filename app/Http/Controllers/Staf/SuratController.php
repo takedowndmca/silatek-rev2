@@ -31,37 +31,44 @@ class SuratController extends Controller
         switch ($layanan) {
             case 'bebas-matakuliah':
                 $daftarSurat = SuratAdministrasi::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan);
+                    $query->where('layanan', $layanan)
+                          ->where('status', 'diajukan');
                 })->paginate(15);
                 break;
             case 'pembimbing-kpi':
                 $daftarSurat = SuratPembimbingKPI::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan);
+                    $query->where('layanan', $layanan)
+                          ->where('status', 'diajukan');
                 })->paginate(15);
                 break;
             case 'pembimbing-ta':
                 $daftarSurat = SuratPembimbingTA::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan);
+                    $query->where('layanan', $layanan)
+                          ->where('status', 'diajukan');
                 })->paginate(15);
                 break;
             case 'seminar-kpi':
                 $daftarSurat = SuratSeminarKPI::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan);
+                    $query->where('layanan', $layanan)
+                          ->where('status', 'diajukan');
                 })->paginate(15);
                 break;
             case 'seminar-proposal':
                 $daftarSurat = SuratSeminarTA::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan);
+                    $query->where('layanan', $layanan)
+                          ->where('status', 'diajukan');
                 })->paginate(15);
                 break;
             case 'seminar-hasil':
                 $daftarSurat = SuratSeminarTA::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan);
+                    $query->where('layanan', $layanan)
+                          ->where('status', 'diajukan');
                 })->paginate(15);
                 break;
             case 'seminar-tutup':
                 $daftarSurat = SuratSeminarTA::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan);
+                    $query->where('layanan', $layanan)
+                          ->where('status', 'diajukan');
                 })->paginate(15);
                 break;
             default:
@@ -306,9 +313,16 @@ class SuratController extends Controller
                 return redirect()->back()->with('error', 'Layanan tidak ditemukan.');
         }
 
+        // Surat sudah dibuat oleh staf,
+        // selanjutnya menunggu persetujuan Wakil Dekan
+        $pengajuan->update([
+            'status' => 'menunggu_wakil_dekan',
+        ]);
+
         event(new SuratDibuat($pengajuan));
 
-        return to_route('staf.surat', $pengajuan->layanan)->with('success', 'Surat berhasil dibuat');
+        return to_route('staf.surat', $pengajuan->layanan)
+        ->with('success', 'Surat berhasil dibuat dan menunggu persetujuan Wakil Dekan');
     }
 
     /**
@@ -327,6 +341,7 @@ class SuratController extends Controller
 
         $pengajuan->ditolak = true;
         $pengajuan->alasan_ditolak = $request->alasan;
+        $pengajuan->status = 'ditolak';
 
         $pengajuan->update();
 

@@ -38,6 +38,14 @@ class DatabaseSeeder extends Seeder
             'jabatan' => 'dekan',
         ]);
 
+        Dekan::create([
+            'nuptk' => '3958752653130132',
+            'nama' => 'Fadhli Rahman, ST., MT',
+            'email' => 'wadek@example.com',
+            'password' => Hash::make('password'),
+            'jabatan' => 'wakil_dekan',
+        ]);
+
         Staf::create([
             'nama' => 'Staf',
             'email' => 'staf@example.com',

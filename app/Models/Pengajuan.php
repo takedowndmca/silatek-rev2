@@ -17,6 +17,9 @@ class Pengajuan extends Model
         'angkatan',
         'prodi',
         'no_telp',
+        'status',
+        'ditolak',
+        'alasan_ditolak',
     ];
 
     protected static function boot()

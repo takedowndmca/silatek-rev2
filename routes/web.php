@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth', 'as' => 'user.'], function () {
 
 require __DIR__ . '/app/admin.php';
 require __DIR__ . '/app/dekan.php';
+require __DIR__ . '/app/wakil_dekan.php';
 require __DIR__ . '/app/staf.php';
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout')->middleware('auth:admin,dekan,staf,user');

@@ -7,7 +7,11 @@ use App\Http\Controllers\Dekan\DashboardController;
 use App\Http\Controllers\Dekan\PengumumanController;
 use App\Http\Controllers\Dekan\UserController;
 
-Route::group(['middleware' => 'auth:dekan', 'prefix' => 'dekan', 'as' => 'dekan.'], function () {
+Route::group([
+      'middleware' => ['auth:dekan', 'wakil-dekan:dekan'],
+      'prefix' => 'dekan',
+      'as' => 'dekan.'
+    ], function () {
   Route::redirect('/', '/dekan/dashboard')->name('index');
 
   Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

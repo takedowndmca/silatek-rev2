@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('angkatan');
             $table->string('prodi');
             $table->string('no_telp');
+            $table->string('status')->default('diajukan');
             $table->boolean('ditolak')->default(false);
             $table->string('alasan_ditolak')->nullable();
             $table->timestamps();

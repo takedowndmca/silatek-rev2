@@ -64,8 +64,19 @@
                         </button>
                     @endauth
                     @auth('dekan')
-                        <button type="button" onclick="location.href='{{ route('dekan.index') }}'"
-                            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-500 text-white hover:bg-red-700 focus:outline-hidden focus:bg-red-700 shadow-2xs disabled:opacity-50 disabled:pointer-events-none">
+                        @php
+                            $user = auth('dekan')->user();
+
+                            $dashboardRoute = $user->jabatan === 'wakil_dekan'
+                                ? 'wakil_dekan.index'
+                                : 'dekan.index';
+                        @endphp
+
+                        <button
+                            type="button"
+                            onclick="location.href='{{ route($dashboardRoute) }}'"
+                            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-500 text-white hover:bg-red-700 focus:outline-hidden focus:bg-red-700 shadow-2xs disabled:opacity-50 disabled:pointer-events-none"
+                        >
                             Dashboard
                         </button>
                     @endauth

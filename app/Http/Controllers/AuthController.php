@@ -22,7 +22,15 @@ class AuthController extends Controller
         $redirects = [
             'user' => fn() => redirect()->intended(route('index')),
             'staf' => fn() => redirect()->intended(route('staf.dashboard')),
-            'dekan' => fn() => redirect()->intended(route('dekan.dashboard')),
+            'dekan' => function () {
+                $dekan = Auth::guard('dekan')->user();
+
+                if ($dekan->jabatan === 'wakil_dekan') {
+                    return redirect()->intended(route('wakil_dekan.dashboard'));
+                }
+
+                return redirect()->intended(route('dekan.dashboard'));
+            },
             'admin' => fn() => redirect()->intended(route('admin.dashboard')),
         ];
 
