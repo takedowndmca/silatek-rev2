@@ -60,6 +60,15 @@ return [
       'Lembar Pengesahan',
       'KRS Semester Berjalan',
     ],
+    'keterangan' => [
+      null,
+      null,
+      null,
+      null,
+      'Minimal 120 SKS dilulus di DNS, nilai KPI dan KKN sudah masuk di DNS',
+      'Lembar pengesahan yang dintandatangani oleh pembimbing 1 & 2, Kaprodi Dan WD1',
+      null,
+    ],
     'pdf' => [
       'surat' => 'pdf.proposal-seminar',
       'undangan' => 'pdf.proposal-undangan',
@@ -71,7 +80,7 @@ return [
     'tipe' => 'seminar-ta',
     'view' => 'seminar-hasil',
     'persyaratan' => [
-      'Usulan Jadwal Hasil dari Prodi',
+      'Usulan Jadwal Hasil',
       'Notulen Seminar Proposal',
       'Berita Acara Proposal',
       'Bukti Pelunasan Hasil',
@@ -80,6 +89,16 @@ return [
       'DNS',
       'Lembar Pengesahan',
       'KRS Semester Berjalan',
+    ],
+    'keterangan' => [
+      'Usulan jadwal hasil dibuat oleh mahasiswa',
+      'Notulen Seminar Proposal yang sudah di acc oleh penguji',
+      'Berita Acara Seminar Proposal yang sudah ditanda tangani oleh semua pembimbing dan penguji',
+      null,
+      null,
+      'Nilai DNS sudah masuk nilai proposal (Tidak termasuk nilai hasil dan tutup)',
+      'Lembar Pengesahan yang sudah ditanda tangani oleh Pembimbing, Kaprodi, Dekan',
+      null,
     ],
     'pdf' => [
       'surat' => 'pdf.hasil-seminar',
@@ -108,7 +127,7 @@ return [
     'view' => 'seminar-tutup',
     'persyaratan' => [
       'Berkas Kelengkapan Tutup',
-      'Usulan Jadwal Tutup dari Prodi',
+      'Usulan Jadwal Tutup',
       'Lembar Asistensi Bimbingan',
       'Berita Acara Hasil',
       'Notulen Seminar Hasil',
@@ -116,6 +135,17 @@ return [
       'DNS',
       'Lembar Pengesahan',
       'KRS Semester Berjalan',
+    ],
+    'keterangan' => [
+      'Pada bagian ini, perlu dibicarakan dulu dengan fakultas',
+      'Usulan jadwal tutup dibuat oleh mahasiswa',
+      'Lembar asisten bimbingan ditanda tangani oleh semua pembimbing',
+      'Berita acara hasil sudah ditanda tangani oleh semua pembimbing dan penguji',
+      'Notulen hasil sudah diacc oleh semua penguji',
+      'Bukti pelunasan Pembayaran ujian tutup',
+      'Nilai proposal, hasil, sudah masuk didalam DNS',
+      'Lembar pengesahan pembimbing sudah dittd oleh semua pembimbing, kaprodi, dekan',
+      null,
     ],
     'pdf' => [
       'surat' => 'pdf.tutup-seminar',
