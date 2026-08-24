@@ -7,7 +7,7 @@ use App\Events\SuratDibuat;
 use App\Http\Controllers\Controller;
 use App\Models\Pengajuan;
 use App\Models\SuratAdministrasi;
-use App\Models\SuratPembimbingKPI;
+use App\Models\SuratPengusulanTempatKPI;
 use App\Models\SuratPembimbingTA;
 use App\Models\SuratSeminarKPI;
 use App\Models\SuratSeminarTA;
@@ -35,8 +35,8 @@ class SuratController extends Controller
                           ->where('status', 'diajukan');
                 })->paginate(15);
                 break;
-            case 'pembimbing-kpi':
-                $daftarSurat = SuratPembimbingKPI::whereHas('pengajuan', function ($query) use ($layanan) {
+            case 'pengusulan-tempat-kpi':
+                $daftarSurat = SuratPengusulanTempatKPI::whereHas('pengajuan', function ($query) use ($layanan) {
                     $query->where('layanan', $layanan)
                           ->where('status', 'diajukan');
                 })->paginate(15);
@@ -189,7 +189,7 @@ class SuratController extends Controller
      * @param Request $request Request yang berisi data surat pembimbingan KPI.
      * @param Pengajuan $pengajuan Objek pengajuan yang terkait dengan surat.
      */
-    private function suratPembimbingKPI(Request $request, Pengajuan $pengajuan)
+    private function SuratPengusulanTempatKPI(Request $request, Pengajuan $pengajuan)
     {
         $data = $request->validate([
             'nomor' => 'required|string',
@@ -198,7 +198,7 @@ class SuratController extends Controller
             'tanggal_surat' => 'required|date',
         ]);
 
-        $surat = SuratPembimbingKPI::where('pengajuan_id', $pengajuan->id)->first();
+        $surat = SuratPengusulanTempatKPI::where('pengajuan_id', $pengajuan->id)->first();
 
         $data['layanan'] = $pengajuan->layanan;
         $data['pengajuan_id'] = $pengajuan->id;
@@ -208,7 +208,7 @@ class SuratController extends Controller
             return;
         }
 
-        SuratPembimbingKPI::create($data);
+        SuratPengusulanTempatKPI::create($data);
     }
 
     /**
@@ -306,8 +306,8 @@ class SuratController extends Controller
             case 'pembimbing-ta':
                 $this->suratPembimbingTA($request, $pengajuan);
                 break;
-            case 'pembimbing-kpi':
-                $this->suratPembimbingKPI($request, $pengajuan);
+            case 'pengusulan-tempat-kpi':
+                $this->SuratPengusulanTempatKPI($request, $pengajuan);
                 break;
             default:
                 return redirect()->back()->with('error', 'Layanan tidak ditemukan.');

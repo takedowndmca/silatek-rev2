@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
-class SuratPembimbingKPI extends Model
+class SuratPengusulanTempatKPI extends Model
 {
-    protected $table = 'surat_pembimbing_kpi';
+    protected $table = 'surat_pengusulan_tempat_kpi';
 
     protected $fillable = [
         'layanan',

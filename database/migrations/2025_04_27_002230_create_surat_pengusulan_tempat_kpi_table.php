@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('surat_pembimbing_kpi', function (Blueprint $table) {
+        Schema::create('surat_pengusulan_tempat_kpi', function (Blueprint $table) {
             $table->id();
             $table->string('layanan');
             $table->foreignId('pengajuan_id')->constrained('pengajuan')->cascadeOnDelete();
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('surat_pembimbing_kpi');
+        Schema::dropIfExists('surat_pengusulan_tempat_kpi');
     }
 };

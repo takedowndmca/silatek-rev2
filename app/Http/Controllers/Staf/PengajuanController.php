@@ -28,7 +28,7 @@ class PengajuanController extends Controller
             ->doesntHave('suratSeminarTA')
             ->doesntHave('suratSeminarKPI')
             ->doesntHave('suratPembimbingTA')
-            ->doesntHave('suratPembimbingKPI')
+            ->doesntHave('SuratPengusulanTempatKPI')
             ->orderBy('ditolak', 'asc')
             ->orderBy('created_at', 'desc')
             ->paginate(15);
@@ -48,6 +48,7 @@ class PengajuanController extends Controller
      */
     public function show(string $layanan, Pengajuan $pengajuan): View|RedirectResponse
     {
+        // dd($pengajuan->berkas->toArray());
         $berkas = PersyaratanBerkas::where('layanan', $layanan)->get();
 
         if ($berkas->count() != $pengajuan->berkas->count()) {

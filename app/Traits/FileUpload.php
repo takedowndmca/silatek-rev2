@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 trait FileUpload
 {
@@ -13,9 +14,22 @@ trait FileUpload
      * @param  string  $path
      * @return string
      */
-    public function uploadFile($file, $path)
+    public function uploadFile($file, $path, $nama = null)
     {
-        $filename = time() . '.' . $file->extension();
+        // Jika nama berkas diberikan, gunakan nama tersebut
+        // Jika tidak, gunakan nama asli file
+        // $namaFile = $nama ?? pathinfo(
+        //     $file->getClientOriginalName(),
+        //     PATHINFO_FILENAME
+        // );
+
+        // // Bersihkan nama file
+        // $namaFile = Str::slug($namaFile, '_');
+
+        // // Tambahkan timestamp dalam milidetik agar unik
+        // $filename = $namaFile . '_' . now()->format('YmdHisv') . '.' . $file->extension();
+        $filename = Str::uuid() . '.' . $file->extension();
+
         $file->move(public_path($path), $filename);
 
         return $filename;

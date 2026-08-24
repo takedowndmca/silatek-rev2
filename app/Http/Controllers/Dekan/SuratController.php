@@ -10,7 +10,7 @@ use App\Models\SuratSeminarTA;
 use App\Models\SuratSeminarKPI;
 use App\Models\SuratAdministrasi;
 use App\Models\SuratPembimbingTA;
-use App\Models\SuratPembimbingKPI;
+use App\Models\SuratPengusulanTempatKPI;
 use App\Http\Controllers\Controller;
 use App\Models\Pengajuan;
 use App\Models\Tandatangan;
@@ -33,8 +33,8 @@ class SuratController extends Controller
                             ->where('status', 'menunggu_dekan');
                 })->paginate(15);
                 break;
-            case 'pembimbing-kpi':
-                $daftarSurat = SuratPembimbingKPI::whereHas('pengajuan', function ($query) use ($layanan) {
+            case 'pengusulan-tempat-kpi':
+                $daftarSurat = SuratPengusulanTempatKPI::whereHas('pengajuan', function ($query) use ($layanan) {
                     $query->where('layanan', $layanan)
                             ->where('status', 'menunggu_dekan');
                 })->paginate(15);

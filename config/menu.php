@@ -77,10 +77,10 @@ return [
       'icon' => 'file',
       'submenu' => [
         [
-          'active' => 'pembimbing-kpi',
-          'label' => 'Pembimbing KPI',
+          'active' => 'pengusulan-tempat-kpi',
+          'label' => 'Pengusulan Tempat KPI',
           'route' => 'dekan.surat',
-          'route_params' => ['layanan' => 'pembimbing-kpi'],
+          'route_params' => ['layanan' => 'pengusulan-tempat-kpi'],
         ],
         [
           'active' => 'seminar-kpi',
@@ -149,10 +149,10 @@ return [
       'icon' => 'file',
       'submenu' => [
         [
-          'active' => 'pembimbing-kpi',
-          'label' => 'Pembimbing KPI',
+          'active' => 'pengusulan-tempat-kpi',
+          'label' => 'Pengusulan Tempat KPI',
           'route' => 'wakil_dekan.surat',
-          'route_params' => ['layanan' => 'pembimbing-kpi'],
+          'route_params' => ['layanan' => 'pengusulan-tempat-kpi'],
         ],
         [
           'active' => 'seminar-kpi',
@@ -221,10 +221,10 @@ return [
       'icon' => 'book-open',
       'submenu' => [
         [
-          'active' => 'pembimbing-kpi',
-          'label' => 'Pembimbing KPI',
+          'active' => 'pengusulan-tempat-kpi',
+          'label' => 'Pengusulan Tempat KPI',
           'route' => 'staf.layanan',
-          'route_params' => ['layanan' => 'pembimbing-kpi'],
+          'route_params' => ['layanan' => 'pengusulan-tempat-kpi'],
         ],
         [
           'active' => 'seminar-kpi',
@@ -270,10 +270,10 @@ return [
       'icon' => 'file',
       'submenu' => [
         [
-          'active' => 'pembimbing-kpi',
-          'label' => 'Pembimbing KPI',
+          'active' => 'pengusulan-tempat-kpi',
+          'label' => 'Pengusulan Tempat KPI',
           'route' => 'staf.surat',
-          'route_params' => ['layanan' => 'pembimbing-kpi'],
+          'route_params' => ['layanan' => 'pengusulan-tempat-kpi'],
         ],
         [
           'active' => 'seminar-kpi',

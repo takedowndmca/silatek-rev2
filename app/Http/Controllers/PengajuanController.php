@@ -124,6 +124,7 @@ class PengajuanController extends Controller implements HasMiddleware
             $file = $request->berkas[$berkas->id];
 
             $filename = $this->uploadFile($file, 'files/pengajuan/' . $layanan);
+            // $filename = $this->uploadFile($file, 'files/pengajuan/' . $layanan, $berkas->nama);
 
             PengajuanBerkas::create([
                 'pengajuan_id' => $pengajuan->id,

@@ -56,9 +56,9 @@ class Pengajuan extends Model
         return $this->hasOne(SuratPembimbingTA::class);
     }
 
-    public function suratPembimbingKPI()
+    public function SuratPengusulanTempatKPI()
     {
-        return $this->hasOne(SuratPembimbingKPI::class);
+        return $this->hasOne(SuratPengusulanTempatKPI::class);
     }
 
     public function surat(): Attribute
@@ -76,8 +76,8 @@ class Pengajuan extends Model
                         return $this->suratSeminarKPI;
                     case 'pembimbing-ta':
                         return $this->suratPembimbingTA;
-                    case 'pembimbing-kpi':
-                        return $this->suratPembimbingKPI;
+                    case 'pengusulan-tempat-kpi':
+                        return $this->SuratPengusulanTempatKPI;
                     default:
                         return null;
                 }
