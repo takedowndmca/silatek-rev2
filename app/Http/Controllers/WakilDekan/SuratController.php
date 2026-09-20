@@ -9,12 +9,18 @@ use App\Models\Pengajuan;
 use App\Models\SuratAdministrasi;
 use App\Models\SuratPengusulanTempatKPI;
 use App\Models\SuratPembimbingTA;
+use App\Models\SuratPembimbingKPI;
+use App\Models\SuratIzinPenelitian;
+use App\Models\SuratKetAktifKuliah;
+use App\Models\SuratKetLulus;
+use App\Models\SuratKeabsahanData;
 use App\Models\SuratSeminarKPI;
 use App\Models\SuratSeminarTA;
 use App\Traits\FileUpload;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Models\Tandatangan;
 
 class SuratController extends Controller
 {
@@ -24,93 +30,215 @@ class SuratController extends Controller
     public function index($layanan): View|RedirectResponse
     {
         switch ($layanan) {
-
-            case 'bebas-matakuliah':
-                $daftarSurat = SuratAdministrasi::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan)
-                        ->where('status', 'menunggu_wakil_dekan');
-                })
-                ->with('pengajuan')
-                ->paginate(15);
+            case "aktif-kuliah":
+                $daftarSurat = SuratKetAktifKuliah::whereHas(
+                    "pengajuan",
+                    function ($query) use ($layanan) {
+                        $query
+                            ->where("layanan", $layanan)
+                            ->whereIn("status", [
+                                "menunggu_wakil_dekan",
+                                "selesai",
+                            ]);
+                    }
+                )
+                    ->with("pengajuan")
+                    ->paginate(15);
                 break;
 
-            case 'pengusulan-tempat-kpi':
-                $daftarSurat = SuratPengusulanTempatKPI::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan)
-                        ->where('status', 'menunggu_wakil_dekan');
-                })
-                ->with('pengajuan')
-                ->paginate(15);
+            case "keabsahan-data":
+                $daftarSurat = SuratKeabsahanData::whereHas(
+                    "pengajuan",
+                    function ($query) use ($layanan) {
+                        $query
+                            ->where("layanan", $layanan)
+                            ->whereIn("status", [
+                                "menunggu_wakil_dekan",
+                                "selesai",
+                            ]);
+                    }
+                )
+                    ->with("pengajuan")
+                    ->paginate(15);
                 break;
 
-            case 'pembimbing-ta':
-                $daftarSurat = SuratPembimbingTA::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan)
-                        ->where('status', 'menunggu_wakil_dekan');
-                })
-                ->with('pengajuan')
-                ->paginate(15);
+            case "bebas-matakuliah":
+                $daftarSurat = SuratAdministrasi::whereHas(
+                    "pengajuan",
+                    function ($query) use ($layanan) {
+                        $query
+                            ->where("layanan", $layanan)
+                            ->whereIn("status", [
+                                "menunggu_wakil_dekan",
+                                "selesai",
+                            ]);
+                    }
+                )
+                    ->with("pengajuan")
+                    ->paginate(15);
                 break;
 
-            case 'seminar-kpi':
-                $daftarSurat = SuratSeminarKPI::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan)
-                        ->where('status', 'menunggu_wakil_dekan');
-                })
-                ->with('pengajuan')
-                ->paginate(15);
+            case "pengusulan-tempat-kpi":
+                $daftarSurat = SuratPengusulanTempatKPI::whereHas(
+                    "pengajuan",
+                    function ($query) use ($layanan) {
+                        $query
+                            ->where("layanan", $layanan)
+                            ->whereIn("status", [
+                                "menunggu_wakil_dekan",
+                                "selesai",
+                            ]);
+                    }
+                )
+                    ->with("pengajuan")
+                    ->paginate(15);
                 break;
 
-            case 'seminar-proposal':
-                $daftarSurat = SuratSeminarTA::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan)
-                        ->where('status', 'menunggu_wakil_dekan');
-                })
-                ->with('pengajuan')
-                ->paginate(15);
+            case "pembimbing-ta":
+                $daftarSurat = SuratPembimbingTA::whereHas(
+                    "pengajuan",
+                    function ($query) use ($layanan) {
+                        $query
+                            ->where("layanan", $layanan)
+                            ->whereIn("status", [
+                                "menunggu_wakil_dekan",
+                                "selesai",
+                            ]);
+                    }
+                )
+                    ->with("pengajuan")
+                    ->paginate(15);
                 break;
 
-            case 'seminar-hasil':
-                $daftarSurat = SuratSeminarTA::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan)
-                        ->where('status', 'menunggu_wakil_dekan');
-                })
-                ->with('pengajuan')
-                ->paginate(15);
+            case "pembimbing-kpi":
+                $daftarSurat = SuratPembimbingKPI::whereHas(
+                    "pengajuan",
+                    function ($query) use ($layanan) {
+                        $query
+                            ->where("layanan", $layanan)
+                            ->whereIn("status", [
+                                "menunggu_wakil_dekan",
+                                "selesai",
+                            ]);
+                    }
+                )
+                    ->with("pengajuan")
+                    ->paginate(15);
                 break;
 
-            case 'seminar-tutup':
-                $daftarSurat = SuratSeminarTA::whereHas('pengajuan', function ($query) use ($layanan) {
-                    $query->where('layanan', $layanan)
-                        ->where('status', 'menunggu_wakil_dekan');
+            case "seminar-kpi":
+                $daftarSurat = SuratSeminarKPI::whereHas("pengajuan", function (
+                    $query
+                ) use ($layanan) {
+                    $query
+                        ->where("layanan", $layanan)
+                        ->whereIn("status", [
+                            "menunggu_wakil_dekan",
+                            "selesai",
+                        ]);
                 })
-                ->with('pengajuan')
-                ->paginate(15);
+                    ->with("pengajuan")
+                    ->paginate(15);
+                break;
+
+            case "seminar-proposal":
+                $daftarSurat = SuratSeminarTA::whereHas("pengajuan", function (
+                    $query
+                ) use ($layanan) {
+                    $query
+                        ->where("layanan", $layanan)
+                        ->whereIn("status", [
+                            "menunggu_wakil_dekan",
+                            "selesai",
+                        ]);
+                })
+                    ->with("pengajuan")
+                    ->paginate(15);
+                break;
+
+            case "izin-penelitian":
+                $daftarSurat = SuratIzinPenelitian::whereHas(
+                    "pengajuan",
+                    function ($query) use ($layanan) {
+                        $query
+                            ->where("layanan", $layanan)
+                            ->whereIn("status", [
+                                "menunggu_wakil_dekan",
+                                "selesai",
+                            ]);
+                    }
+                )
+                    ->with("pengajuan")
+                    ->paginate(15);
+                break;
+
+            case "seminar-hasil":
+                $daftarSurat = SuratSeminarTA::whereHas("pengajuan", function (
+                    $query
+                ) use ($layanan) {
+                    $query
+                        ->where("layanan", $layanan)
+                        ->whereIn("status", [
+                            "menunggu_wakil_dekan",
+                            "selesai",
+                        ]);
+                })
+                    ->with("pengajuan")
+                    ->paginate(15);
+                break;
+
+            case "seminar-tutup":
+                $daftarSurat = SuratSeminarTA::whereHas("pengajuan", function (
+                    $query
+                ) use ($layanan) {
+                    $query
+                        ->where("layanan", $layanan)
+                        ->whereIn("status", [
+                            "menunggu_wakil_dekan",
+                            "selesai",
+                        ]);
+                })
+                    ->with("pengajuan")
+                    ->paginate(15);
+                break;
+
+            case "keterangan-lulus":
+                $daftarSurat = SuratKetLulus::whereHas("pengajuan", function (
+                    $query
+                ) use ($layanan) {
+                    $query
+                        ->where("layanan", $layanan)
+                        ->whereIn("status", [
+                            "menunggu_wakil_dekan",
+                            "selesai",
+                        ]);
+                })
+                    ->with("pengajuan")
+                    ->paginate(15);
                 break;
 
             default:
-                return redirect()->back()
-                    ->with('error', 'Layanan tidak ditemukan.');
+                return redirect()
+                    ->back()
+                    ->with("error", "Layanan tidak ditemukan.");
         }
 
-        return view('wakil-dekan.surat', [
-            'daftarSurat' => $daftarSurat,
-            'layanan' => $layanan,
+        return view("wakil-dekan.surat", [
+            "daftarSurat" => $daftarSurat,
+            "layanan" => $layanan,
         ]);
     }
-
 
     /**
      * Menampilkan detail pengajuan.
      */
     public function show(string $layanan, Pengajuan $pengajuan): View
     {
-        return view('wakil-dekan.surat-detail', [
-            'pengajuan' => $pengajuan,
-            'layanan' => $layanan,
+        return view("wakil-dekan.surat-detail", [
+            "pengajuan" => $pengajuan,
+            "layanan" => $layanan,
         ]);
     }
-
 
     /**
      * Wakil Dekan menyetujui pengajuan.
@@ -122,25 +250,81 @@ class SuratController extends Controller
         string $layanan,
         Pengajuan $pengajuan
     ): RedirectResponse {
+        //     dd([
+        //     'layanan_dari_route' => $layanan,
+        //     'pengajuan_id' => $pengajuan->id,
+        //     'pengajuan_layanan' => $pengajuan->layanan,
+        //     'status' => $pengajuan->status,
+        // ]);
 
-        if ($pengajuan->status !== 'menunggu_wakil_dekan') {
+        if ($pengajuan->status !== "menunggu_wakil_dekan") {
             return back()->with(
-                'error',
-                'Pengajuan ini belum sampai pada tahap persetujuan Wakil Dekan.'
+                "error",
+                "Pengajuan ini belum sampai pada tahap persetujuan Wakil Dekan."
             );
         }
 
-        $pengajuan->update([
-            'status' => 'menunggu_dekan',
+        $user = auth("dekan")->user();
+
+        /*
+        |--------------------------------------------------------------------------
+        | LAYANAN YANG LANGSUNG SELESAI DI WAKIL DEKAN
+        |--------------------------------------------------------------------------
+        */
+
+        $layananLangsungSelesai = [
+            "pengusulan-tempat-kpi",
+            "izin-penelitian",
+            "aktif-kuliah",
+            "keabsahan-data",
+        ];
+
+        /*
+        |--------------------------------------------------------------------------
+        | LAYANAN LANGSUNG SELESAI
+        |--------------------------------------------------------------------------
+        */
+
+        if (in_array($layanan, $layananLangsungSelesai)) {
+            $pengajuan->surat->ttd()->create([
+                "jenis" => "ttd",
+                "nuptk" => $user->nuptk,
+                "nama" => $user->nama,
+            ]);
+
+            $pengajuan->update([
+                "status" => "selesai",
+            ]);
+
+            return to_route("wakil_dekan.surat", $layanan)->with(
+                "success",
+                "Pengajuan berhasil ditandatangani dan telah diselesaikan."
+            );
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | LAYANAN LAIN
+        |--------------------------------------------------------------------------
+        | Wadek hanya memberikan paraf lalu diteruskan ke Dekan.
+        |--------------------------------------------------------------------------
+        */
+
+        $pengajuan->surat->parafWadek()->create([
+            "jenis" => "paraf_wadek",
+            "nuptk" => $user->nuptk,
+            "nama" => $user->nama,
         ]);
 
-        return to_route('wakil_dekan.surat', $layanan)
-            ->with(
-                'success',
-                'Pengajuan berhasil disetujui dan diteruskan ke Dekan.'
-            );
-    }
+        $pengajuan->update([
+            "status" => "menunggu_dekan",
+        ]);
 
+        return to_route("wakil_dekan.surat", $layanan)->with(
+            "success",
+            "Pengajuan berhasil diparaf dan diteruskan ke Dekan."
+        );
+    }
 
     /**
      * Wakil Dekan menolak pengajuan.
@@ -149,25 +333,26 @@ class SuratController extends Controller
         string $layanan,
         Pengajuan $pengajuan
     ): RedirectResponse {
-
-        if ($pengajuan->status !== 'menunggu_wakil_dekan') {
+        if ($pengajuan->status !== "menunggu_wakil_dekan") {
             return back()->with(
-                'error',
-                'Pengajuan ini belum sampai pada tahap persetujuan Wakil Dekan.'
+                "error",
+                "Pengajuan ini belum sampai pada tahap persetujuan Wakil Dekan."
             );
         }
 
         $pengajuan->update([
-            'status' => 'ditolak',
-            'ditolak' => true,
-            'alasan_ditolak' =>
-                'Berkas ditolak oleh Wakil Dekan. Silahkan ajukan ulang dengan berkas yang benar.',
+            "status" => "ditolak",
+            "ditolak" => true,
+            "alasan_ditolak" =>
+                "Berkas ditolak oleh Wakil Dekan. Silahkan ajukan ulang dengan berkas yang benar.",
         ]);
 
         event(new PengajuanDitolak($pengajuan));
 
-        return to_route('wakil_dekan.surat', $layanan)
-            ->with('success', 'Pengajuan berhasil ditolak.');
+        return to_route("wakil_dekan.surat", $layanan)->with(
+            "success",
+            "Pengajuan berhasil ditolak."
+        );
     }
 
     /**
@@ -180,22 +365,24 @@ class SuratController extends Controller
      */
     public function pdf(Request $request, string $layanan, Pengajuan $pengajuan)
     {
-        $jenis = $request->get('jenis') ?? 'surat';
+        $jenis = $request->get("jenis") ?? "surat";
 
-        $layanan = config('layanan')[$layanan];
+        $layanan = config("layanan")[$layanan];
         $surat = $pengajuan->surat;
 
         if ($surat->ttd) {
-            $ttd = base64_encode(generateQr(url('/') . '/surat?id=' . $pengajuan->uuid));
+            $ttd = base64_encode(
+                generateQr(url("/") . "/surat?id=" . $pengajuan->uuid)
+            );
         } else {
             $ttd = null;
         }
 
-        return pdf($layanan['pdf'][$jenis], [
-            'layanan' => $layanan,
-            'pengajuan' => $pengajuan,
-            'surat' => $surat,
-            'ttd' => $ttd,
+        return pdf($layanan["pdf"][$jenis], [
+            "layanan" => $layanan,
+            "pengajuan" => $pengajuan,
+            "surat" => $surat,
+            "ttd" => $ttd,
         ]);
     }
 }

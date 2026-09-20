@@ -175,65 +175,146 @@
             <td>
                 Bahwa Dosen Penguji yang dimaksud :
                 <table>
+
                     @if ($surat->kategori == 'non-skripsi')
+
+                        {{-- ==========================================
+             NON SKRIPSI
+             ========================================== --}}
+
                         <tr>
                             <td style="width: 15pt">1.</td>
+
                             <td style="width: 120pt">
                                 Ketua Sidang
                             </td>
+
                             <td class="center" style="width: 10pt">:</td>
-                            <td>{{ $surat->ketua_sekertaris }}</td>
+
+                            <td>
+                                {{ $surat->ketua_sekertaris }}
+                            </td>
                         </tr>
+
                         <tr>
                             <td style="width: 15pt">2.</td>
+
                             <td style="width: 120pt">
                                 Pembimbing Utama
                             </td>
+
                             <td class="center" style="width: 10pt">:</td>
-                            <td>{{ $surat->pembimbing }}</td>
+
+                            <td>
+                                {{ $surat->pembimbing }}
+                            </td>
                         </tr>
+
                         <tr>
                             <td style="width: 15pt">3.</td>
+
                             <td style="width: 120pt">
                                 Penguji
                             </td>
+
                             <td class="center" style="width: 10pt">:</td>
-                            <td>{{ $surat->penguji }}</td>
+
+                            <td>
+                                {{ $surat->penguji }}
+                            </td>
                         </tr>
                     @else
+                        {{-- ==========================================
+             AMBIL DATA
+             ========================================== --}}
+
                         @php
+
                             $nomor = 1;
-                            $penguji = explode(PHP_EOL, $surat->pembimbing);
+
+                            $pembimbing = preg_split('/\r\n|\r|\n/', $surat->pembimbing);
+
+                            $penguji = preg_split('/\r\n|\r|\n/', $surat->penguji);
+
+                            $ketuaSekretaris = preg_split('/\r\n|\r|\n/', $surat->ketua_sekertaris);
+
+                            // Hilangkan baris kosong
+                            $pembimbing = array_values(array_filter($pembimbing, fn($item) => trim($item) !== ''));
+
+                            $penguji = array_values(array_filter($penguji, fn($item) => trim($item) !== ''));
+
+                            $ketuaSekretaris = array_values(
+                                array_filter($ketuaSekretaris, fn($item) => trim($item) !== ''),
+                            );
+
                         @endphp
-                        @for ($i = 0; $i < count(explode(PHP_EOL, $surat->pembimbing)); $i++)
+
+
+                        {{-- ==========================================
+             PEMBIMBING
+             ========================================== --}}
+
+                        @foreach ($pembimbing as $i => $nama)
                             <tr>
-                                <td style="width: 15pt">{{ $nomor++ }}.</td>
-                                <td style="width: 120pt">
-                                    @php
-                                        $posisi = $i == 0 ? 'Ketua' : 'Sekertaris';
-                                    @endphp
-                                    {{ $posisi ? $posisi . ' / ' : '' }}Pembimbing {{ romawi($i + 1) }}
+
+                                <td style="width: 15pt">
+                                    {{ $nomor++ }}.
                                 </td>
-                                <td class="center" style="width: 10pt">:</td>
-                                <td>{{ explode(PHP_EOL, $surat->pembimbing)[$i] }}</td>
+
+                                <td style="width: 120pt">
+
+                                    @if ($i == 0)
+                                        Ketua /
+                                    @elseif ($i == 1)
+                                        Sekretaris /
+                                    @endif
+
+                                    Pembimbing {{ romawi($i + 1) }}
+
+                                </td>
+
+                                <td class="center" style="width: 10pt">
+                                    :
+                                </td>
+
+                                <td>
+                                    {{ trim($nama) }}
+                                </td>
+
                             </tr>
-                        @endfor
-                        @php
-                            $nomor = 3;
-                            $penguji = explode(PHP_EOL, $surat->penguji);
-                        @endphp
-                        @for ($i = 0; $i < count(explode(PHP_EOL, $surat->penguji)); $i++)
+                        @endforeach
+
+
+                        {{-- ==========================================
+             PENGUJI
+             ========================================== --}}
+
+                        @foreach ($penguji as $i => $nama)
                             <tr>
-                                <td style="width: 15pt">{{ $nomor++ }}.</td>
+
+                                <td style="width: 15pt">
+                                    {{ $nomor++ }}.
+                                </td>
+
                                 <td style="width: 120pt">
                                     Penguji {{ romawi($i + 1) }}
                                 </td>
-                                <td class="center" style="width: 10pt">:</td>
-                                <td>{{ explode(PHP_EOL, $surat->penguji)[$i] }}</td>
+
+                                <td class="center" style="width: 10pt">
+                                    :
+                                </td>
+
+                                <td>
+                                    {{ trim($nama) }}
+                                </td>
+
                             </tr>
-                        @endfor
+                        @endforeach
+
                     @endif
+
                 </table>
+
             </td>
         </tr>
         <tr>
@@ -287,34 +368,109 @@
     <table style="width: 100%">
         <tr>
             <td style="width: 50%"></td>
+
             <td style="width: 50%">
 
+                {{-- Tanggal --}}
                 <table>
                     <tr>
                         <td>Ditetapkan di</td>
                         <td class="center" style="width: 10pt">:</td>
                         <td>Makassar</td>
                     </tr>
+
                     <tr>
                         <td>Pada Tanggal</td>
                         <td class="center">:</td>
-                        <td><u>{{ tanggalHijri($surat->tanggal_surat) }} H</u></td>
+                        <td>
+                            <u>{{ tanggalHijri($surat->tanggal_surat) }} H</u>
+                        </td>
                     </tr>
+
                     <tr>
                         <td></td>
                         <td></td>
-                        <td>{{ tanggal($surat->tanggal_surat) }} M</td>
+                        <td>
+                            {{ tanggal($surat->tanggal_surat) }} M
+                        </td>
                     </tr>
                 </table>
 
-                <p>{{ ucwords(str_replace('_', ' ', $surat->penandatangan)) }},</p>
+
+                {{-- Paraf Wakil Dekan + Jabatan Dekan --}}
+                <div
+                    style="
+                position: relative;
+                margin: 0;
+                padding: 0;
+                height: 20px;
+            ">
+
+                    {{-- Tulisan Dekan tetap --}}
+                    <span
+                        style="
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    margin: 0;
+                    padding: 0;
+                    white-space: nowrap;
+                ">
+                        Dekan,
+                    </span>
+
+                    {{-- Paraf Wakil Dekan --}}
+                    @if ($surat->parafWadek)
+                        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('paraf/wadek.png'))) }}"
+                            style="
+                            position: absolute;
+                            left: -25px;
+                            top: -5px;
+                            width: 25px;
+                            height: auto;
+                            margin: 0;
+                            padding: 0;
+                        ">
+                    @endif
+
+                </div>
+
+
+                {{-- TTD / QR Dekan --}}
                 @if ($ttd)
-                    <div class="qr">
-                        <img src="data:image/png;base64, {{ $ttd }}">
+                    <div class="qr"
+                        style="
+                    margin: 0;
+                    padding: 0;
+                    line-height: 0;
+                ">
+                        <img src="data:image/png;base64,{{ $ttd }}"
+                            style="
+                            margin: 0;
+                            padding: 0;
+                            display: block;
+                        ">
                     </div>
 
-                    <p class="ttd">{{ $surat->ttd->nama }}</p>
-                    <p>NUPTK. {{ $surat->ttd->nuptk }}</p>
+                    {{-- Nama Dekan --}}
+                    <p class="ttd"
+                        style="
+                    margin: 0;
+                    padding: 0;
+                    line-height: 1;
+                ">
+                        {{ $surat->ttd->nama }}
+                    </p>
+
+                    {{-- NUPTK --}}
+                    <p
+                        style="
+                    margin: 0;
+                    padding: 0;
+                    line-height: 1;
+                ">
+                        NUPTK. {{ $surat->ttd->nuptk }}
+                    </p>
                 @else
                     <div style="height: 100px"></div>
                 @endif

@@ -134,45 +134,93 @@
 
     <p><b>Kepada Yang Terhormat,</b></p>
     <table class="mb">
+
         @if ($surat->kategori == 'non-skripsi')
+
+            {{-- KETUA SIDANG --}}
             <tr>
-                <td style="width: 120pt">{{ $surat->ketua_sekertaris }}</td>
+                <td style="width: 200pt">
+                    {{ $surat->ketua_sekertaris }}
+                </td>
                 <td>(Ketua Sidang)</td>
             </tr>
+
+            {{-- PEMBIMBING --}}
             <tr>
-                <td style="width: 120pt">{{ $surat->pembimbing }}</td>
+                <td style="width: 200pt">
+                    {{ $surat->pembimbing }}
+                </td>
                 <td>(Pembimbing Utama)</td>
             </tr>
+
+            {{-- PENGUJI --}}
             <tr>
-                <td style="width: 120pt">{{ $surat->penguji }}</td>
+                <td style="width: 200pt">
+                    {{ $surat->penguji }}
+                </td>
                 <td>(Penguji)</td>
             </tr>
         @else
-            @foreach (explode(PHP_EOL, $surat->pembimbing) as $pembimbing)
-                <tr>
-                    <td style="width: 200pt">{{ $pembimbing }}</td>
-                    <td>
-                        ({{ $loop->index == 0 ? 'Pembimbing' : 'Co. Pembimbing' }})
-                    </td>
-                </tr>
+            {{-- ==========================================
+             PEMBIMBING
+             ========================================== --}}
+
+            @foreach (preg_split('/\r\n|\r|\n/', $surat->pembimbing) as $pembimbing)
+                @if (trim($pembimbing) !== '')
+                    <tr>
+                        <td style="width: 200pt">
+                            {{ trim($pembimbing) }}
+                        </td>
+
+                        <td>
+                            ({{ $loop->first ? 'Pembimbing' : 'Co. Pembimbing' }})
+                        </td>
+                    </tr>
+                @endif
             @endforeach
-            @foreach (explode(PHP_EOL, $surat->penguji) as $penguji)
-                <tr>
-                    <td style="width: 200pt">{{ $penguji }}</td>
-                    <td>
-                        (Penguji)
-                    </td>
-                </tr>
+
+
+
+
+
+            {{-- ==========================================
+             PENGUJI
+             ========================================== --}}
+
+            @foreach (preg_split('/\r\n|\r|\n/', $surat->penguji) as $penguji)
+                @if (trim($penguji) !== '')
+                    <tr>
+                        <td style="width: 200pt">
+                            {{ trim($penguji) }}
+                        </td>
+
+                        <td>
+                            (Penguji)
+                        </td>
+                    </tr>
+                @endif
             @endforeach
-            @foreach (explode(PHP_EOL, $surat->ketua_sekertaris) as $ketuaSekertaris)
-                <tr>
-                    <td style="width: 200pt">{{ $ketuaSekertaris }}</td>
-                    <td>
-                        ({{ $loop->index == 0 ? 'Ketua Sdiang' : 'Sekertaris' }})
-                    </td>
-                </tr>
+
+            {{-- ==========================================
+             KETUA & SEKRETARIS SIDANG
+             ========================================== --}}
+
+            @foreach (preg_split('/\r\n|\r|\n/', $surat->ketua_sekertaris) as $index => $ketuaSekretaris)
+                @if (trim($ketuaSekretaris) !== '')
+                    <tr>
+                        <td style="width: 200pt">
+                            {{ trim($ketuaSekretaris) }}
+                        </td>
+
+                        <td>
+                            ({{ $index == 0 ? 'Ketua Sidang' : 'Sekretaris Sidang' }})
+                        </td>
+                    </tr>
+                @endif
             @endforeach
+
         @endif
+
     </table>
 
     <p class="mb">Di - <br> Makassar</p>
@@ -238,18 +286,91 @@
     <table style="width: 100%">
         <tr>
             <td style="width: 50%"></td>
+
             <td style="width: 50%">
-                <p>{{ ucwords(str_replace('_', ' ', $surat->penandatangan)) }},</p>
-                @if ($ttd)
-                    <div class="qr">
-                        <img src="data:image/png;base64, {{ $ttd }}">
+
+                {{-- Tanggal --}}
+                <table>
+
+
+                    {{-- Paraf Wakil Dekan + Jabatan Dekan --}}
+                    <div
+                        style="
+                position: relative;
+                margin: 0;
+                padding: 0;
+                height: 20px;
+            ">
+
+                        {{-- Tulisan Dekan tetap --}}
+                        <span
+                            style="
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    margin: 0;
+                    padding: 0;
+                    white-space: nowrap;
+                ">
+                            Dekan,
+                        </span>
+
+                        {{-- Paraf Wakil Dekan --}}
+                        @if ($surat->parafWadek)
+                            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('paraf/wadek.png'))) }}"
+                                style="
+                            position: absolute;
+                            left: -25px;
+                            top: -5px;
+                            width: 25px;
+                            height: auto;
+                            margin: 0;
+                            padding: 0;
+                        ">
+                        @endif
+
                     </div>
 
-                    <p class="ttd">{{ $surat->ttd->nama }}</p>
-                    <p>NUPTK. {{ $surat->ttd->nuptk }}</p>
-                @else
-                    <div style="height: 100px"></div>
-                @endif
+
+                    {{-- TTD / QR Dekan --}}
+                    @if ($ttd)
+                        <div class="qr"
+                            style="
+                    margin: 0;
+                    padding: 0;
+                    line-height: 0;
+                ">
+                            <img src="data:image/png;base64,{{ $ttd }}"
+                                style="
+                            margin: 0;
+                            padding: 0;
+                            display: block;
+                        ">
+                        </div>
+
+                        {{-- Nama Dekan --}}
+                        <p class="ttd"
+                            style="
+                    margin: 0;
+                    padding: 0;
+                    line-height: 1;
+                ">
+                            {{ $surat->ttd->nama }}
+                        </p>
+
+                        {{-- NUPTK --}}
+                        <p
+                            style="
+                    margin: 0;
+                    padding: 0;
+                    line-height: 1;
+                ">
+                            NUPTK. {{ $surat->ttd->nuptk }}
+                        </p>
+                    @else
+                        <div style="height: 100px"></div>
+                    @endif
+
             </td>
         </tr>
     </table>

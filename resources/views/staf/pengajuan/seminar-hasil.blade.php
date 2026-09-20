@@ -4,7 +4,469 @@
             paging: false,
             ordering: false,
             info: false,
-        })
+        });
+
+
+        // =========================================================
+        // CONTAINER
+        // =========================================================
+
+        const pembimbingContainer =
+            document.getElementById('pembimbing-container');
+
+        const pengujiContainer =
+            document.getElementById('penguji-container');
+
+
+        // =========================================================
+        // UPDATE NAME PEMBIMBING
+        // =========================================================
+
+        function updatePembimbingNames() {
+
+            const items =
+                pembimbingContainer.querySelectorAll('.pembimbing-item');
+
+            items.forEach((item, index) => {
+
+                const nomor = index + 1;
+
+                const input = item.querySelector('input');
+
+                if (input) {
+                    input.name = `pembimbing[${nomor}]`;
+                    input.placeholder = `Pembimbing ${nomor}`;
+                }
+            });
+
+            updateKetuaDariPembimbing();
+            updateSekretarisDariPembimbing();
+        }
+
+
+        // =========================================================
+        // UPDATE NAME PENGUJI
+        // =========================================================
+
+        function updatePengujiNames() {
+
+            const items =
+                pengujiContainer.querySelectorAll('.penguji-item');
+
+            items.forEach((item, index) => {
+
+                const nomor = index + 1;
+
+                const input = item.querySelector('input');
+
+                if (input) {
+                    input.name = `penguji[${nomor}]`;
+                    input.placeholder = `Penguji ${nomor}`;
+                }
+            });
+        }
+
+
+        // =========================================================
+        // BUAT PEMBIMBING
+        // =========================================================
+
+        function buatPembimbing() {
+
+            const div = document.createElement('div');
+
+            div.className =
+                'pembimbing-item flex gap-2 mb-2';
+
+            div.innerHTML = `
+                <input type="text"
+                    class="py-2.5 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm"
+                    required>
+
+                <button type="button"
+                    class="hapus-pembimbing px-3 text-red-500 hover:text-red-700">
+                    ×
+                </button>
+            `;
+
+            pembimbingContainer.appendChild(div);
+
+            updatePembimbingNames();
+        }
+
+
+        // =========================================================
+        // BUAT PENGUJI
+        // =========================================================
+
+        function buatPenguji() {
+
+            const div = document.createElement('div');
+
+            div.className =
+                'penguji-item flex gap-2 mb-2';
+
+            div.innerHTML = `
+                <input type="text"
+                    class="py-2.5 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm"
+                    required>
+
+                <button type="button"
+                    class="hapus-penguji px-3 text-red-500 hover:text-red-700">
+                    ×
+                </button>
+            `;
+
+            pengujiContainer.appendChild(div);
+
+            updatePengujiNames();
+        }
+
+
+        // =========================================================
+        // UPDATE TOMBOL HAPUS PEMBIMBING
+        // =========================================================
+
+        function updateNomorPembimbing() {
+
+            const items =
+                pembimbingContainer.querySelectorAll('.pembimbing-item');
+
+            items.forEach((item, index) => {
+
+                const tombolHapus =
+                    item.querySelector('.hapus-pembimbing');
+
+                if (index === 0) {
+
+                    if (tombolHapus) {
+                        tombolHapus.remove();
+                    }
+
+                } else {
+
+                    if (!tombolHapus) {
+
+                        item.insertAdjacentHTML(
+                            'beforeend',
+                            `
+                            <button type="button"
+                                class="hapus-pembimbing px-3 text-red-500 hover:text-red-700">
+                                ×
+                            </button>
+                            `
+                        );
+                    }
+                }
+            });
+        }
+
+
+        // =========================================================
+        // UPDATE TOMBOL HAPUS PENGUJI
+        // =========================================================
+
+        function updateNomorPenguji() {
+
+            const items =
+                pengujiContainer.querySelectorAll('.penguji-item');
+
+            items.forEach((item, index) => {
+
+                const tombolHapus =
+                    item.querySelector('.hapus-penguji');
+
+                if (index === 0) {
+
+                    if (tombolHapus) {
+                        tombolHapus.remove();
+                    }
+
+                } else {
+
+                    if (!tombolHapus) {
+
+                        item.insertAdjacentHTML(
+                            'beforeend',
+                            `
+                            <button type="button"
+                                class="hapus-penguji px-3 text-red-500 hover:text-red-700">
+                                ×
+                            </button>
+                            `
+                        );
+                    }
+                }
+            });
+        }
+
+
+        // =========================================================
+        // TAMBAH PEMBIMBING
+        // =========================================================
+
+        document
+            .getElementById('tambahPembimbing')
+            .addEventListener('click', function() {
+
+                buatPembimbing();
+
+                updateNomorPembimbing();
+
+                updatePembimbingNames();
+            });
+
+
+        // =========================================================
+        // TAMBAH PENGUJI
+        // =========================================================
+
+        document
+            .getElementById('tambahPenguji')
+            .addEventListener('click', function() {
+
+                buatPenguji();
+
+                updateNomorPenguji();
+
+                updatePengujiNames();
+            });
+
+
+        // =========================================================
+        // HAPUS PEMBIMBING / PENGUJI
+        // =========================================================
+
+        document.addEventListener('click', function(event) {
+
+            if (
+                event.target.classList.contains(
+                    'hapus-pembimbing'
+                )
+            ) {
+
+                const item =
+                    event.target.closest('.pembimbing-item');
+
+                if (item) {
+                    item.remove();
+                }
+
+                updateNomorPembimbing();
+                updatePembimbingNames();
+            }
+
+
+            if (
+                event.target.classList.contains(
+                    'hapus-penguji'
+                )
+            ) {
+
+                const item =
+                    event.target.closest('.penguji-item');
+
+                if (item) {
+                    item.remove();
+                }
+
+                updateNomorPenguji();
+                updatePengujiNames();
+            }
+
+        });
+
+
+        // =========================================================
+        // KETUA SIDANG
+        // SAMA DENGAN PEMBIMBING 1
+        // =========================================================
+
+        const ketuaCheckbox =
+            document.getElementById('ketuaSamaPembimbing');
+
+        const ketuaInput =
+            document.getElementById('ketuaSidang');
+
+
+        function updateKetuaDariPembimbing() {
+
+            if (!ketuaCheckbox || !ketuaInput) {
+                return;
+            }
+
+            if (!ketuaCheckbox.checked) {
+                return;
+            }
+
+            const pembimbing1 =
+                pembimbingContainer.querySelector(
+                    'input[name="pembimbing[1]"]'
+                );
+
+            if (pembimbing1) {
+
+                ketuaInput.value =
+                    pembimbing1.value;
+
+                ketuaInput.readOnly = true;
+            }
+        }
+
+
+        if (ketuaCheckbox) {
+
+            ketuaCheckbox.addEventListener(
+                'change',
+                function() {
+
+                    if (this.checked) {
+
+                        const pembimbing1 =
+                            pembimbingContainer.querySelector(
+                                'input[name="pembimbing[1]"]'
+                            );
+
+                        if (pembimbing1) {
+
+                            ketuaInput.value =
+                                pembimbing1.value;
+
+                            ketuaInput.readOnly = true;
+                        }
+
+                    } else {
+
+                        ketuaInput.value = '';
+
+                        ketuaInput.readOnly = false;
+                    }
+                }
+            );
+        }
+
+
+        // =========================================================
+        // SEKRETARIS SIDANG
+        // SAMA DENGAN PEMBIMBING 2
+        // =========================================================
+
+        const sekretarisCheckbox =
+            document.getElementById(
+                'sekretarisSamaPembimbing'
+            );
+
+        const sekretarisInput =
+            document.getElementById(
+                'sekretarisSidang'
+            );
+
+
+        function updateSekretarisDariPembimbing() {
+
+            if (
+                !sekretarisCheckbox ||
+                !sekretarisInput
+            ) {
+                return;
+            }
+
+            if (!sekretarisCheckbox.checked) {
+                return;
+            }
+
+            const pembimbing2 =
+                pembimbingContainer.querySelector(
+                    'input[name="pembimbing[2]"]'
+                );
+
+            if (pembimbing2) {
+
+                sekretarisInput.value =
+                    pembimbing2.value;
+
+                sekretarisInput.readOnly = true;
+            }
+        }
+
+
+        if (sekretarisCheckbox) {
+
+            sekretarisCheckbox.addEventListener(
+                'change',
+                function() {
+
+                    if (this.checked) {
+
+                        const pembimbing2 =
+                            pembimbingContainer.querySelector(
+                                'input[name="pembimbing[2]"]'
+                            );
+
+                        if (pembimbing2) {
+
+                            sekretarisInput.value =
+                                pembimbing2.value;
+
+                            sekretarisInput.readOnly = true;
+                        }
+
+                    } else {
+
+                        sekretarisInput.value = '';
+
+                        sekretarisInput.readOnly = false;
+                    }
+                }
+            );
+        }
+
+
+        // =========================================================
+        // KETIKA PEMBIMBING DIUBAH
+        // =========================================================
+
+        pembimbingContainer.addEventListener(
+            'input',
+            function(event) {
+
+                if (
+                    event.target.matches(
+                        'input[name^="pembimbing["]'
+                    )
+                ) {
+
+                    updateKetuaDariPembimbing();
+
+                    updateSekretarisDariPembimbing();
+                }
+            }
+        );
+
+
+        // =========================================================
+        // DEFAULT
+        // 2 PEMBIMBING
+        // =========================================================
+
+        buatPembimbing();
+        buatPembimbing();
+
+        updateNomorPembimbing();
+        updatePembimbingNames();
+
+
+        // =========================================================
+        // DEFAULT
+        // 3 PENGUJI
+        // =========================================================
+
+        buatPenguji();
+        buatPenguji();
+        buatPenguji();
+
+        updateNomorPenguji();
+        updatePengujiNames();
     </script>
 @endpush
 
@@ -123,32 +585,115 @@
                                             class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                                             required>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="pembimbing"
-                                            class="block text-sm font-medium mb-2">Pembimbing</label>
-                                        <textarea id="pembimbing" name="pembimbing"
-                                            class="py-2 px-3 sm:py-3 sm:px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                                            rows="3"></textarea>
-                                        <span class="text-gray-500 text-sm mt-1">Masukkan nama pembimbing dan
-                                            dipisahkan dengan baris baru</span>
+                                    {{-- =========================================================
+     PEMBIMBING
+========================================================= --}}
+
+                                    <div class="mb-5">
+                                        <div class="flex justify-between items-center mb-2">
+
+                                            <label class="block text-sm font-medium">
+                                                Pembimbing
+                                            </label>
+
+                                            <button type="button" id="tambahPembimbing"
+                                                class="text-sm text-blue-600 hover:text-blue-800">
+                                                + Tambah Pembimbing
+                                            </button>
+
+                                        </div>
+
+                                        <div id="pembimbing-container"></div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="ketuaSekertaris"
-                                            class="block text-sm font-medium mb-2">Ketua/Sekertaris Sidang</label>
-                                        <textarea id="ketuaSekertaris" name="ketua_sekertaris"
-                                            class="py-2 px-3 sm:py-3 sm:px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                                            rows="3"></textarea>
-                                        <span class="text-gray-500 text-sm mt-1">Masukkan nama ketua/sekertaris dan
-                                            dipisahkan dengan baris baru</span>
+
+
+                                    {{-- =========================================================
+     KETUA SIDANG
+========================================================= --}}
+
+                                    <div class="mb-5">
+
+                                        <div class="flex items-center justify-between mb-2">
+
+                                            <label for="ketuaSidang" class="block text-sm font-medium">
+                                                Ketua Sidang
+                                            </label>
+
+                                            <label
+                                                class="inline-flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+
+                                                <input type="checkbox" id="ketuaSamaPembimbing"
+                                                    class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+
+                                                Sama dengan Pembimbing 1
+
+                                            </label>
+
+                                        </div>
+
+                                        <input type="text" id="ketuaSidang" name="ketua_sidang"
+                                            placeholder="Nama Ketua Sidang"
+                                            class="py-2.5 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm"
+                                            required>
+
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="penguji" class="block text-sm font-medium mb-2">Penguji</label>
-                                        <textarea id="penguji" name="penguji"
-                                            class="py-2 px-3 sm:py-3 sm:px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                                            rows="3"></textarea>
-                                        <span class="text-gray-500 text-sm mt-1">Masukkan nama penguji dan
-                                            dipisahkan dengan baris baru</span>
+
+
+                                    {{-- =========================================================
+     SEKRETARIS SIDANG
+========================================================= --}}
+
+                                    <div class="mb-5">
+
+                                        <div class="flex items-center justify-between mb-2">
+
+                                            <label for="sekretarisSidang" class="block text-sm font-medium">
+                                                Sekretaris Sidang
+                                            </label>
+
+                                            <label
+                                                class="inline-flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+
+                                                <input type="checkbox" id="sekretarisSamaPembimbing"
+                                                    class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+
+                                                Sama dengan Pembimbing 2
+
+                                            </label>
+
+                                        </div>
+
+                                        <input type="text" id="sekretarisSidang" name="sekretaris_sidang"
+                                            placeholder="Nama Sekretaris Sidang"
+                                            class="py-2.5 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm"
+                                            required>
+
                                     </div>
+
+
+                                    {{-- =========================================================
+     PENGUJI
+========================================================= --}}
+
+                                    <div class="mb-5">
+
+                                        <div class="flex justify-between items-center mb-2">
+
+                                            <label class="block text-sm font-medium">
+                                                Penguji
+                                            </label>
+
+                                            <button type="button" id="tambahPenguji"
+                                                class="text-sm text-blue-600 hover:text-blue-800">
+                                                + Tambah Penguji
+                                            </button>
+
+                                        </div>
+
+                                        <div id="penguji-container"></div>
+
+                                    </div>
+
                                     <div class="mb-3">
                                         <label for="judulSkripsiInput" class="block text-sm font-medium mb-2">Judul
                                             Skripsi</label>

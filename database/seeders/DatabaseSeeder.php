@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Admin;
 use App\Models\Dekan;
 use App\Models\Staf;
+use App\Models\Kaprodi;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -50,6 +51,14 @@ class DatabaseSeeder extends Seeder
             'nama' => 'Staf',
             'email' => 'staf@example.com',
             'password' => Hash::make('password'),
+        ]);
+
+        Kaprodi::create([
+            'nuptk' => '3958752653130132',
+            'nama' => 'Kaprodi Teknik Informatika',
+            'email' => 'kaprodi@example.com',
+            'password' => Hash::make('password'),
+            'prodi_id' => 1,
         ]);
 
         User::create([

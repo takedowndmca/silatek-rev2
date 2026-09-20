@@ -114,46 +114,141 @@
                                 <div class="p-4 overflow-y-auto">
                                     <x-errors />
 
+                                    {{-- Nomor Surat --}}
                                     <div class="mb-3">
-                                        <label for="nomorInput" class="block text-sm font-medium mb-2">Nomor
-                                            Surat</label>
-                                        <input type="text" id="nomorInput" name="nomor"
-                                            value="{{ App\Utils\NomorSurat::keputusan() }}"
-                                            class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                                            required>
+                                        <label for="nomorInput" class="block text-sm font-medium mb-2">
+                                            Nomor Surat
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            id="nomorInput"
+                                            name="nomor"
+                                            value="{{ old('nomor', App\Utils\NomorSurat::keputusan()) }}"
+                                            class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
+                                            required
+                                        >
                                     </div>
+
+
+                                    {{-- Tujuan Instansi --}}
                                     <div class="mb-3">
-                                        <label for="pembimbingInput"
-                                            class="block text-sm font-medium mb-2">Pembimbing</label>
-                                        <input type="text" id="pembimbingInput" name="pembimbing"
-                                            class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                                            required>
+                                        <label for="tujuanInstansiInput" class="block text-sm font-medium mb-2">
+                                            Tujuan Instansi
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            id="tujuanInstansiInput"
+                                            name="tujuan_instansi"
+                                            value="{{ old('tujuan_instansi') }}"
+                                            placeholder="Contoh: Badan Pusat Statistik Provinsi Sulawesi Selatan"
+                                            class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
+                                            required
+                                        >
                                     </div>
+
+
+                                    {{-- Alamat Tujuan --}}
                                     <div class="mb-3">
-                                        <label for="mahasiswa" class="block text-sm font-medium mb-2">Mahasiswa</label>
-                                        <textarea id="mahasiswa" name="mahasiswa"
-                                            class="py-2 px-3 sm:py-3 sm:px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
-                                            rows="3"></textarea>
-                                        <span class="text-gray-500 text-sm mt-1">Masukkan data mahasiswa dengan format
-                                            (Nama / NIM) dan dipisahkan
-                                            dengan baris baru</span>
+                                        <label for="alamatTujuanInput" class="block text-sm font-medium mb-2">
+                                            Alamat Tujuan
+                                        </label>
+
+                                        <textarea
+                                            id="alamatTujuanInput"
+                                            name="alamat_tujuan"
+                                            rows="2"
+                                            placeholder="Contoh: Jl. H. Bau No. 6 Kunjung Mae Kec. Mariso Kota Makassar, Sul-Sel"
+                                            class="py-2 px-3 sm:py-3 sm:px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
+                                            required
+                                        >{{ old('alamat_tujuan') }}</textarea>
                                     </div>
+
+
+                                    {{-- Pembimbing --}}
                                     <div class="mb-3">
-                                        <label for="tanggalSuratInput" class="block text-sm font-medium mb-2">Tanggal
-                                            Surat</label>
-                                        <input type="date" id="tanggalSuratInput" name="tanggal_surat"
-                                            class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                                        <label for="pembimbingInput" class="block text-sm font-medium mb-2">
+                                            Pembimbing
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            id="pembimbingInput"
+                                            name="pembimbing"
+                                            value="{{ old('pembimbing') }}"
+                                            placeholder="Nama dosen pembimbing"
+                                            class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
+                                            required
+                                        >
+                                    </div>
+                                    {{-- Mahasiswa --}}
+                                    <div class="mb-3">
+                                        <label for="mahasiswa" class="block text-sm font-medium mb-2">
+                                            Mahasiswa
+                                        </label>
+
+                                        <textarea
+                                            id="mahasiswa"
+                                            name="mahasiswa"
+                                            rows="4"
+                                            placeholder="Nama / NIM&#10;Nama / NIM"
+                                            class="py-2 px-3 sm:py-3 sm:px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
+                                            required
+                                        >{{ old('mahasiswa') }}</textarea>
+
+                                        <span class="text-gray-500 text-sm mt-1 block">
+                                            Masukkan data mahasiswa dengan format
+                                            <b>Nama / NIM</b> dan pisahkan setiap mahasiswa dengan baris baru.
+                                        </span>
+                                    </div>
+                                    {{-- Waktu --}}
+                                    <div class="mb-3">
+                                        <label for="waktuInput" class="block text-sm font-medium mb-2">
+                                            Waktu
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            id="waktuInput"
+                                            name="waktu"
+                                            value="{{ old('waktu') }}"
+                                            placeholder="Contoh: 18 Agustus s/d 19 Oktober 2026"
+                                            class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
+                                            required
+                                        >
+
+                                        <span class="text-gray-500 text-sm mt-1 block">
+                                            Contoh: 18 Agustus s/d 19 Oktober 2026
+                                        </span>
+                                    </div>
+                                    {{-- Tanggal Surat --}}
+                                    <div class="mb-3">
+                                        <label for="tanggalSuratInput" class="block text-sm font-medium mb-2">
+                                            Tanggal Surat
+                                        </label>
+
+                                        <input
+                                            type="date"
+                                            id="tanggalSuratInput"
+                                            name="tanggal_surat"
+                                            value="{{ old('tanggal_surat', date('Y-m-d')) }}"
+                                            class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500"
                                             required>
                                     </div>
                                 </div>
                                 <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t border-gray-200">
-                                    <button type="button"
-                                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
+
+                                    <button
+                                        type="button"
+                                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50"
                                         data-hs-overlay="#formSurat">
                                         Tutup
                                     </button>
-                                    <button type="submit"
-                                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+
+                                    <button
+                                        type="submit"
+                                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700">
                                         Buat Surat
                                     </button>
                                 </div>

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tandatangan', function (Blueprint $table) {
             $table->id();
             $table->morphs('surat');
+            $table->string('jenis');
             $table->string('nuptk');
             $table->string('nama');
             $table->timestamps();

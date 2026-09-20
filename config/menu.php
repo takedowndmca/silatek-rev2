@@ -35,6 +35,12 @@ return [
           'route_params' => [],
         ],
         [
+          'active' => 'kaprodi',
+          'label' => 'Kaprodi',
+          'route' => 'admin.kaprodi',
+          'route_params' => [],
+        ],
+        [
           'active' => 'staf',
           'label' => 'Staf TU',
           'route' => 'admin.staf',
@@ -77,10 +83,22 @@ return [
       'icon' => 'file',
       'submenu' => [
         [
+          'active' => 'aktif-kuliah',
+          'label' => 'Aktif Kuliah',
+          'route' => 'dekan.surat',
+          'route_params' => ['layanan' => 'aktif-kuliah'],
+        ],
+        [
           'active' => 'pengusulan-tempat-kpi',
           'label' => 'Pengusulan Tempat KPI',
           'route' => 'dekan.surat',
           'route_params' => ['layanan' => 'pengusulan-tempat-kpi'],
+        ],
+        [
+          'active' => 'pembimbing-kpi',
+          'label' => 'Pembimbing KPI',
+          'route' => 'dekan.surat',
+          'route_params' => ['layanan' => 'pembimbing-kpi'],
         ],
         [
           'active' => 'seminar-kpi',
@@ -113,10 +131,28 @@ return [
           'route_params' => ['layanan' => 'seminar-hasil'],
         ],
         [
+          'active' => 'izin-penelitian',
+          'label' => 'Izin Penelitian',
+          'route' => 'dekan.surat',
+          'route_params' => ['layanan' => 'izin-penelitian'],
+        ],
+        [
           'active' => 'seminar-tutup',
           'label' => 'Seminar Tutup',
           'route' => 'dekan.surat',
           'route_params' => ['layanan' => 'seminar-tutup'],
+        ],
+        [
+          'active' => 'keterangan-lulus',
+          'label' => 'Keterangan Lulus',
+          'route' => 'dekan.surat',
+          'route_params' => ['layanan' => 'keterangan-lulus'],
+        ],
+        [
+          'active' => 'keabsahan-data',
+          'label' => 'Keabsahan Data',
+          'route' => 'dekan.surat',
+          'route_params' => ['layanan' => 'keabsahan-data'],
         ],
       ]
     ],
@@ -149,10 +185,22 @@ return [
       'icon' => 'file',
       'submenu' => [
         [
+          'active' => 'aktif-kuliah',
+          'label' => 'Aktif Kuliah',
+          'route' => 'wakil_dekan.surat',
+          'route_params' => ['layanan' => 'aktif-kuliah'],
+        ],
+        [
           'active' => 'pengusulan-tempat-kpi',
           'label' => 'Pengusulan Tempat KPI',
           'route' => 'wakil_dekan.surat',
           'route_params' => ['layanan' => 'pengusulan-tempat-kpi'],
+        ],
+        [
+          'active' => 'pembimbing-kpi',
+          'label' => 'Pembimbing KPI',
+          'route' => 'wakil_dekan.surat',
+          'route_params' => ['layanan' => 'pembimbing-kpi'],
         ],
         [
           'active' => 'seminar-kpi',
@@ -179,6 +227,12 @@ return [
           'route_params' => ['layanan' => 'seminar-proposal'],
         ],
         [
+          'active' => 'izin-penelitian',
+          'label' => 'Izin Penelitian',
+          'route' => 'wakil_dekan.surat',
+          'route_params' => ['layanan' => 'izin-penelitian'],
+        ],
+        [
           'active' => 'seminar-hasil',
           'label' => 'Seminar Hasil',
           'route' => 'wakil_dekan.surat',
@@ -189,6 +243,18 @@ return [
           'label' => 'Seminar Tutup',
           'route' => 'wakil_dekan.surat',
           'route_params' => ['layanan' => 'seminar-tutup'],
+        ],
+        [
+          'active' => 'keterangan-lulus',
+          'label' => 'Keterangan Lulus',
+          'route' => 'wakil_dekan.surat',
+          'route_params' => ['layanan' => 'keterangan-lulus'],
+        ],
+        [
+          'active' => 'keabsahan-data',
+          'label' => 'Keabsahan Data',
+          'route' => 'wakil_dekan.surat',
+          'route_params' => ['layanan' => 'keabsahan-data'],
         ],
       ]
     ],
@@ -221,10 +287,22 @@ return [
       'icon' => 'book-open',
       'submenu' => [
         [
+          'active' => 'aktif-kuliah',
+          'label' => 'Aktif Kuliah',
+          'route' => 'staf.layanan',
+          'route_params' => ['layanan' => 'aktif-kuliah'],
+        ],
+        [
           'active' => 'pengusulan-tempat-kpi',
           'label' => 'Pengusulan Tempat KPI',
           'route' => 'staf.layanan',
           'route_params' => ['layanan' => 'pengusulan-tempat-kpi'],
+        ],
+        [
+          'active' => 'pembimbing-kpi',
+          'label' => 'Pembimbing KPI',
+          'route' => 'staf.layanan',
+          'route_params' => ['layanan' => 'pembimbing-kpi'],
         ],
         [
           'active' => 'seminar-kpi',
@@ -251,6 +329,12 @@ return [
           'route_params' => ['layanan' => 'seminar-proposal'],
         ],
         [
+          'active' => 'izin-penelitian',
+          'label' => 'Izin Penelitian',
+          'route' => 'staf.layanan',
+          'route_params' => ['layanan' => 'izin-penelitian'],
+        ],
+        [
           'active' => 'seminar-hasil',
           'label' => 'Seminar Hasil',
           'route' => 'staf.layanan',
@@ -261,6 +345,18 @@ return [
           'label' => 'Seminar Tutup',
           'route' => 'staf.layanan',
           'route_params' => ['layanan' => 'seminar-tutup'],
+        ],
+        [
+          'active' => 'keterangan-lulus',
+          'label' => 'Keterangan Lulus',
+          'route' => 'staf.layanan',
+          'route_params' => ['layanan' => 'keterangan-lulus'],
+        ],
+        [
+          'active' => 'keabsahan-data',
+          'label' => 'Keabsahan Data',
+          'route' => 'staf.layanan',
+          'route_params' => ['layanan' => 'keabsahan-data'],
         ],
       ]
     ],
@@ -270,10 +366,22 @@ return [
       'icon' => 'file',
       'submenu' => [
         [
+          'active' => 'aktif-kuliah',
+          'label' => 'Aktif Kuliah',
+          'route' => 'staf.surat',
+          'route_params' => ['layanan' => 'aktif-kuliah'],
+        ],
+        [
           'active' => 'pengusulan-tempat-kpi',
           'label' => 'Pengusulan Tempat KPI',
           'route' => 'staf.surat',
           'route_params' => ['layanan' => 'pengusulan-tempat-kpi'],
+        ],
+        [
+          'active' => 'pembimbing-kpi',
+          'label' => 'Pembimbing KPI',
+          'route' => 'staf.layanan',
+          'route_params' => ['layanan' => 'pembimbing-kpi'],
         ],
         [
           'active' => 'seminar-kpi',
@@ -300,6 +408,12 @@ return [
           'route_params' => ['layanan' => 'seminar-proposal'],
         ],
         [
+          'active' => 'izin-penelitian',
+          'label' => 'Izin Penelitian',
+          'route' => 'staf.surat',
+          'route_params' => ['layanan' => 'izin-penelitian'],
+        ],
+        [
           'active' => 'seminar-hasil',
           'label' => 'Seminar Hasil',
           'route' => 'staf.surat',
@@ -311,7 +425,28 @@ return [
           'route' => 'staf.surat',
           'route_params' => ['layanan' => 'seminar-tutup'],
         ],
+        [
+          'active' => 'keterangan-lulus',
+          'label' => 'Keterangan Lulus',
+          'route' => 'staf.surat',
+          'route_params' => ['layanan' => 'keterangan-lulus'],
+        ],
+        [
+          'active' => 'keabsahan-data',
+          'label' => 'Keabsahan Data',
+          'route' => 'staf.surat',
+          'route_params' => ['layanan' => 'keabsahan-data'],
+        ],
       ]
+    ],
+  ],
+  'kaprodi' => [
+    [
+      'active' => 'dashboard',
+      'label' => 'Dashboard',
+      'route' => 'kaprodi.dashboard',
+      'route_params' => [],
+      'icon' => 'home',
     ],
   ],
 ];

@@ -52,6 +52,10 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
+        'kaprodi' => [
+            'driver' => 'session',
+            'provider' => 'kaprodis',
+        ],
     ],
 
     /*
@@ -87,6 +91,10 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\Admin::class),
+        ],
+        'kaprodis' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Kaprodi::class,
         ],
 
         // 'users' => [

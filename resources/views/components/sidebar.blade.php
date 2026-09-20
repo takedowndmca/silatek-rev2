@@ -61,6 +61,10 @@
                         ? 'wakil_dekan'
                         : 'dekan';
 
+                } elseif (Auth::guard('kaprodi')->check()) {
+                    $menuGuard = 'kaprodi';
+                    $currentUser = Auth::guard('kaprodi')->user();
+
                 } elseif (Auth::guard('staf')->check()) {
                     $menuGuard = 'staf';
                     $currentUser = Auth::guard('staf')->user();
@@ -249,7 +253,8 @@
                         src="{{ asset('assets/images/avatar.png') }}"
                         alt="Avatar">
 
-                    {{ Str::limit(auth()->user()->nama, 25) }}
+                    {{-- {{ Str::limit(auth()->user()->nama, 25) }} --}}
+                    {{ Str::limit($currentUser->nama, 25) }}
 
                     <svg class="shrink-0 size-3.5 ms-auto"
                         xmlns="http://www.w3.org/2000/svg"
@@ -301,6 +306,10 @@
                                     $accountRoute = 'dekan.account';
 
                                 }
+
+                            } elseif (Auth::guard('kaprodi')->check()) {
+
+                                $accountRoute = 'kaprodi.account';
 
                             } elseif (Auth::guard('staf')->check()) {
 

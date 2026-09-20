@@ -29,6 +29,8 @@ return Application::configure(basePath: dirname(__DIR__))
                 return route('wakil_dekan.dashboard');
             }
                 return route('dekan.dashboard');
+            } elseif (Auth::guard('kaprodi')->check()) {
+                return route('kaprodi.dashboard');
             } elseif (Auth::guard('staf')->check()) {
                 return route('staf.dashboard');
             } elseif (Auth::guard('user')->check()) {

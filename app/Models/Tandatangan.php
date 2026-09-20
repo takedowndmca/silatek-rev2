@@ -9,6 +9,7 @@ class Tandatangan extends Model
     protected $table = 'tandatangan';
 
     protected $fillable = [
+        'jenis',
         'nuptk',
         'nama',
     ];

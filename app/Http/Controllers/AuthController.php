@@ -18,7 +18,7 @@ class AuthController extends Controller
     {
         $remember = $request->remember ? true : false;
 
-        $guards = ['user', 'staf', 'dekan', 'admin'];
+        $guards = ['user', 'staf', 'dekan', 'admin', 'kaprodi'];
         $redirects = [
             'user' => fn() => redirect()->intended(route('index')),
             'staf' => fn() => redirect()->intended(route('staf.dashboard')),
@@ -32,6 +32,7 @@ class AuthController extends Controller
                 return redirect()->intended(route('dekan.dashboard'));
             },
             'admin' => fn() => redirect()->intended(route('admin.dashboard')),
+            'kaprodi' => fn() => redirect()->intended(route('kaprodi.dashboard')),
         ];
 
         foreach ($guards as $guard) {
@@ -67,6 +68,7 @@ class AuthController extends Controller
         Auth::guard('staf')->logout();
         Auth::guard('dekan')->logout();
         Auth::guard('admin')->logout();
+        Auth::guard('kaprodi')->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

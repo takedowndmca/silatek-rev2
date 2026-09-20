@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return password_verify($password, $this->password);
     }
+
+    public function pengajuan()
+    {
+        return $this->hasMany(Pengajuan::class);
+    }
 }

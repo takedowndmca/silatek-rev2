@@ -9,7 +9,7 @@
 <x-layouts.dashboard title="Staf">
     <div class="card">
         <div class="flex items-center justify-between mb-4">
-            <h1 class="text-xl font-semibold text-gray-800">Daftar Staf</h1>
+            <h1 class="text-xl font-semibold text-gray-800">Daftar Dekan</h1>
             <button aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-offcanvas-right"
                 data-hs-overlay="#hs-offcanvas-right"
                 class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-500 text-white hover:bg-red-700 focus:outline-hidden focus:bg-red-700 disabled:opacity-50 disabled:pointer-events-none">

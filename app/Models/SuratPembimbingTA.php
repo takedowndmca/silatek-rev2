@@ -22,11 +22,18 @@ class SuratPembimbingTA extends Model
 
     public function ttd()
     {
-        return $this->morphOne(Tandatangan::class, 'surat');
+        return $this->morphOne(Tandatangan::class, 'surat')
+            ->where('jenis', 'ttd');
     }
 
     public function pengajuan()
     {
         return $this->belongsTo(Pengajuan::class);
+    }
+
+    public function parafWadek()
+    {
+        return $this->morphOne(Tandatangan::class, 'surat')
+            ->where('jenis', 'paraf_wadek');
     }
 }

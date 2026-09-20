@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('layanan');
             $table->foreignId('pengajuan_id')->constrained('pengajuan')->cascadeOnDelete();
             $table->string('nomor');
+            $table->text('tujuan_instansi');
+            $table->text('alamat_tujuan');
+            $table->string('waktu');
             $table->text('pembimbing');
             $table->text('mahasiswa');
             $table->string('tanggal_surat');

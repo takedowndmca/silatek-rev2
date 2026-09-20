@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('angkatan');
             $table->string('prodi');
+            $table->json('data')->nullable();
             $table->string('no_telp');
             $table->string('status')->default('diajukan');
             $table->boolean('ditolak')->default(false);

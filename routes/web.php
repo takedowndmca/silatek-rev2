@@ -9,7 +9,7 @@ use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\SuratController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => 'guest:admin,dekan,staf,user'], function () {
+Route::group(['middleware' => 'guest:admin,dekan,staf,user,kaprodi'], function () {
     Route::view('/login', 'auth.login')->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
@@ -43,5 +43,6 @@ require __DIR__ . '/app/admin.php';
 require __DIR__ . '/app/dekan.php';
 require __DIR__ . '/app/wakil_dekan.php';
 require __DIR__ . '/app/staf.php';
+require __DIR__ . '/app/kaprodi.php';
 
-Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout')->middleware('auth:admin,dekan,staf,user');
+Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout')->middleware('auth:admin,dekan,staf,user,kaprodi');

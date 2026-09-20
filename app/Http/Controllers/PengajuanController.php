@@ -79,6 +79,212 @@ class PengajuanController extends Controller implements HasMiddleware
 
     public function store(Request $request, $layanan): RedirectResponse
     {
+        /*
+        |--------------------------------------------------------------------------
+        | Ambil konfigurasi layanan
+        |--------------------------------------------------------------------------
+        */
+
+        $config = config("layanan.$layanan");
+
+        if (!$config) {
+            abort(404);
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Validasi upload berkas
+        |--------------------------------------------------------------------------
+        */
+
+        $rules = [
+            'berkas' => 'required|array',
+            'berkas.*' => 'file|mimes:pdf|max:2048',
+        ];
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Validasi field dinamis
+        |--------------------------------------------------------------------------
+        */
+
+        foreach ($config['fields'] ?? [] as $field) {
+
+            $fieldName = 'data.' . $field['name'];
+
+            $fieldRules = [];
+
+            // required / nullable
+            $fieldRules[] = ($field['required'] ?? false)
+                ? 'required'
+                : 'nullable';
+
+
+            // berdasarkan tipe field
+            switch ($field['type']) {
+
+                case 'text':
+                    $fieldRules[] = 'string';
+                    $fieldRules[] = 'max:255';
+                    break;
+
+                case 'textarea':
+                    $fieldRules[] = 'string';
+                    $fieldRules[] = 'max:5000';
+                    break;
+
+                case 'select':
+
+                    $options = array_keys($field['options'] ?? []);
+
+                    $fieldRules[] = 'in:' . implode(',', $options);
+
+                    break;
+
+                case 'date':
+                    $fieldRules[] = 'date';
+                    break;
+            }
+
+            $rules[$fieldName] = $fieldRules;
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Jalankan validasi
+        |--------------------------------------------------------------------------
+        */
+
+        $validated = $request->validate($rules);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Cek apakah sudah pernah mengajukan
+        |--------------------------------------------------------------------------
+        */
+
+        $pengajuan = Pengajuan::where('nim', auth('user')->user()->nim)
+            ->where('layanan', $layanan)
+            ->first();
+
+        if ($pengajuan && !$pengajuan->ditolak) {
+            return redirect()->back()->with(
+                'error',
+                'Anda telah mengajukan layanan ini sebelumnya dan sedang dalam proses. Silakan tunggu hingga proses selesai.'
+            );
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Jika pengajuan sebelumnya ditolak
+        |--------------------------------------------------------------------------
+        */
+
+        if ($pengajuan && $pengajuan->ditolak) {
+
+            foreach ($pengajuan->berkas as $berkas) {
+
+                $this->deleteFile(
+                    $berkas->file,
+                    'files/pengajuan/' . $layanan
+                );
+
+                $berkas->delete();
+            }
+
+            $pengajuan->delete();
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Ambil daftar persyaratan berkas
+        |--------------------------------------------------------------------------
+        */
+
+        $daftarBerkas = PersyaratanBerkas::where('layanan', $layanan)->get();
+
+        if ($daftarBerkas->count() != count($request->berkas)) {
+            return redirect()->back()->with(
+                'error',
+                'Jumlah berkas tidak sesuai.'
+            );
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | User
+        |--------------------------------------------------------------------------
+        */
+
+        $user = auth('user')->user();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Buat pengajuan
+        |--------------------------------------------------------------------------
+        */
+
+        $pengajuan = Pengajuan::create([
+            'layanan' => $layanan,
+            'nim' => $user->nim,
+            'nama' => $user->nama,
+            'angkatan' => $user->angkatan,
+            'prodi' => $user->prodi->nama,
+            'no_telp' => $user->no_telp,
+
+            // INI YANG BARU
+            'data' => $validated['data'] ?? [],
+        ]);
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Upload berkas
+        |--------------------------------------------------------------------------
+        */
+
+        foreach ($daftarBerkas as $berkas) {
+
+            $file = $request->berkas[$berkas->id];
+
+            $filename = $this->uploadFile(
+                $file,
+                'files/pengajuan/' . $layanan
+            );
+
+            PengajuanBerkas::create([
+                'pengajuan_id' => $pengajuan->id,
+                'berkas' => $berkas->nama,
+                'file' => $filename,
+            ]);
+        }
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | Event
+        |--------------------------------------------------------------------------
+        */
+
+        event(new PengajuanTerkirim($pengajuan));
+
+
+        return redirect()->back()->with(
+            'success',
+            'Pengajuan berhasil dikirim.'
+        );
+    }
+
+    public function store2(Request $request, $layanan): RedirectResponse
+    {
         $request->validate([
             'berkas' => 'required|array',
             'berkas.*' => 'file|mimes:pdf|max:2048',

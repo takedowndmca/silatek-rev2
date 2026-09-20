@@ -106,7 +106,7 @@
         <p class="center"><b>Nomor: {{ $surat->nomor }}</b></p>
     </div>
 
-    <h1>PENGUJI SEMINAR UJIAN PROPOSAL DAN HASIL TUGAS AKHIR</h1>
+    <h1>PENGUJI SEMINAR KPI</h1>
     <h1>UNIVERSITAS ISLAM MAKASSAR</h1>
 
     <p class="salam">Bismillahirrahmanirrahim</p>
@@ -280,6 +280,7 @@
             <td style="width: 50%"></td>
             <td style="width: 50%">
 
+                {{-- Tanggal --}}
                 <table>
                     <tr>
                         <td>Ditetapkan di</td>
@@ -289,24 +290,94 @@
                     <tr>
                         <td>Pada Tanggal</td>
                         <td class="center">:</td>
-                        <td><u>{{ tanggalHijri($surat->tanggal_surat) }} H</u></td>
+                        <td>
+                            <u>{{ tanggalHijri($surat->tanggal_surat) }} H</u>
+                        </td>
                     </tr>
                     <tr>
                         <td></td>
                         <td></td>
-                        <td>{{ tanggal($surat->tanggal_surat) }} M</td>
+                        <td>
+                            {{ tanggal($surat->tanggal_surat) }} M
+                        </td>
                     </tr>
                 </table>
 
 
-                <p>{{ ucwords(str_replace('_', ' ', $surat->penandatangan)) }},</p>
+                {{-- Paraf Wakil Dekan + Jabatan Dekan --}}
+                <div
+                    style="
+                position: relative;
+                margin: 0;
+                padding: 0;
+                height: 20px;
+            ">
+
+                    {{-- Tulisan Dekan tetap --}}
+                    <span
+                        style="
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    margin: 0;
+                    padding: 0;
+                    white-space: nowrap;
+                ">
+                        Dekan,
+                    </span>
+
+                    {{-- Paraf Wakil Dekan --}}
+                    @if ($surat->parafWadek)
+                        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('paraf/wadek.png'))) }}"
+                            style="
+                            position: absolute;
+                            left: -25px;
+                            top: -5px;
+                            width: 25px;
+                            height: auto;
+                            margin: 0;
+                            padding: 0;
+                        ">
+                    @endif
+
+                </div>
+
+
+                {{-- TTD / QR Dekan --}}
                 @if ($ttd)
-                    <div class="qr">
-                        <img src="data:image/png;base64, {{ $ttd }}">
+                    <div class="qr"
+                        style="
+                    margin: 0;
+                    padding: 0;
+                    line-height: 0;
+                ">
+                        <img src="data:image/png;base64,{{ $ttd }}"
+                            style="
+                            margin: 0;
+                            padding: 0;
+                            display: block;
+                        ">
                     </div>
 
-                    <p class="ttd">{{ $surat->ttd->nama }}</p>
-                    <p>NUPTK. {{ $surat->ttd->nuptk }}</p>
+                    {{-- Nama Dekan --}}
+                    <p class="ttd"
+                        style="
+                    margin: 0;
+                    padding: 0;
+                    line-height: 1;
+                ">
+                        {{ $surat->ttd->nama }}
+                    </p>
+
+                    {{-- NUPTK --}}
+                    <p
+                        style="
+                    margin: 0;
+                    padding: 0;
+                    line-height: 1;
+                ">
+                        NUPTK. {{ $surat->ttd->nuptk }}
+                    </p>
                 @else
                     <div style="height: 100px"></div>
                 @endif

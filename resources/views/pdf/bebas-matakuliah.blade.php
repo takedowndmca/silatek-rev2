@@ -119,31 +119,118 @@
     <table style="width: 100%">
         <tr>
             <td style="width: 50%"></td>
+
             <td style="width: 50%">
 
-                <table style="padding: 0; ">
+                {{-- Tanggal --}}
+                <table>
                     <tr>
-                        <td style="padding: 0">Makassar,</td>
-                        <td style="padding: 0 5pt"><u>{{ tanggalHijri($surat->tanggal_surat) }} H</u></td>
+                        <td>Ditetapkan di</td>
+                        <td class="center" style="width: 10pt">:</td>
+                        <td>Makassar</td>
                     </tr>
+
                     <tr>
-                        <td style="padding: 0"></td>
-                        <td style="padding: 0 5pt">{{ tanggal($surat->tanggal_surat) }} M</td>
+                        <td>Pada Tanggal</td>
+                        <td class="center">:</td>
+                        <td>
+                            <u>{{ tanggalHijri($surat->tanggal_surat) }} H</u>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            {{ tanggal($surat->tanggal_surat) }} M
+                        </td>
                     </tr>
                 </table>
 
 
-                <p>{{ ucwords(str_replace('_', ' ', $surat->penandatangan)) }},</p>
+                {{-- Paraf Wakil Dekan + Jabatan Dekan --}}
+                <div style="
+                    position: relative;
+                    margin: 0;
+                    padding: 0;
+                    height: 20px;
+                ">
+
+                    {{-- Tulisan Dekan tetap --}}
+                    <span style="
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        margin: 0;
+                        padding: 0;
+                        white-space: nowrap;
+                    ">
+                        Dekan,
+                    </span>
+
+                    {{-- Paraf Wakil Dekan --}}
+                    @if ($surat->parafWadek)
+                        <img
+                            src="data:image/png;base64,{{ base64_encode(
+                                file_get_contents(public_path('paraf/wadek.png'))
+                            ) }}"
+                            style="
+                                position: absolute;
+                                left: -25px;
+                                top: -5px;
+                                width: 25px;
+                                height: auto;
+                                margin: 0;
+                                padding: 0;
+                            "
+                        >
+                    @endif
+
+                </div>
+
+
+                {{-- TTD / QR Dekan --}}
                 @if ($ttd)
-                    <div class="qr">
-                        <img src="data:image/png;base64, {{ $ttd }}">
+
+                    <div class="qr" style="
+                        margin: 0;
+                        padding: 0;
+                        line-height: 0;
+                    ">
+                        <img
+                            src="data:image/png;base64,{{ $ttd }}"
+                            style="
+                                margin: 0;
+                                padding: 0;
+                                display: block;
+                            "
+                        >
                     </div>
 
-                    <p class="ttd">{{ $surat->ttd->nama }}</p>
-                    <p>NUPTK. {{ $surat->ttd->nuptk }}</p>
+                    {{-- Nama Dekan --}}
+                    <p class="ttd" style="
+                        margin: 0;
+                        padding: 0;
+                        line-height: 1;
+                    ">
+                        {{ $surat->ttd->nama }}
+                    </p>
+
+                    {{-- NUPTK --}}
+                    <p style="
+                        margin: 0;
+                        padding: 0;
+                        line-height: 1;
+                    ">
+                        NUPTK. {{ $surat->ttd->nuptk }}
+                    </p>
+
                 @else
+
                     <div style="height: 100px"></div>
+
                 @endif
+
             </td>
         </tr>
     </table>

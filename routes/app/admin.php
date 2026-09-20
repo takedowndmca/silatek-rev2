@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DekanController;
 use App\Http\Controllers\Admin\PengumumanController;
 use App\Http\Controllers\Admin\ProdiController;
+use App\Http\Controllers\Admin\KaprodiController;
 use App\Http\Controllers\Admin\StafController;
 use App\Http\Controllers\Admin\UserController;
 
@@ -41,6 +42,12 @@ Route::group(['middleware' => 'auth:admin', 'prefix' => 'admin', 'as' => 'admin.
     Route::get('/mahasiswa/{user}/edit', [UserController::class, 'edit'])->name('mahasiswa.edit');
     Route::put('/mahasiswa/{user}', [UserController::class, 'update'])->name('mahasiswa.update');
     Route::delete('/mahasiswa/{user}', [UserController::class, 'destroy'])->name('mahasiswa.destroy');
+
+    Route::get('/kaprodi', [KaprodiController::class, 'index'])->name('kaprodi');
+    Route::post('/kaprodi', [KaprodiController::class, 'store'])->name('kaprodi.store');
+    Route::get('/kaprodi/{kaprodi}/edit', [KaprodiController::class, 'edit'])->name('kaprodi.edit');
+    Route::put('/kaprodi/{kaprodi}', [KaprodiController::class, 'update'])->name('kaprodi.update');
+    Route::delete('/kaprodi/{kaprodi}', [KaprodiController::class, 'destroy'])->name('kaprodi.destroy');
   });
 
   Route::get('/account', [AccountController::class, 'index'])->name('account');

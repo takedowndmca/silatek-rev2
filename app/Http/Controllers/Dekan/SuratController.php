@@ -10,6 +10,11 @@ use App\Models\SuratSeminarTA;
 use App\Models\SuratSeminarKPI;
 use App\Models\SuratAdministrasi;
 use App\Models\SuratPembimbingTA;
+use App\Models\SuratPembimbingKPI;
+use App\Models\SuratIzinPenelitian;
+use App\Models\SuratKetAktifKuliah;
+use App\Models\SuratKetLulus;
+use App\Models\SuratKeabsahanData;
 use App\Models\SuratPengusulanTempatKPI;
 use App\Http\Controllers\Controller;
 use App\Models\Pengajuan;
@@ -27,46 +32,112 @@ class SuratController extends Controller
     public function index($layanan): View|RedirectResponse
     {
         switch ($layanan) {
+            case 'aktif-kuliah':
+                $daftarSurat = SuratKetAktifKuliah::whereHas('pengajuan', function ($query) use ($layanan) {
+                    $query->where('layanan', $layanan)
+                            ->whereIn('status', [
+                            'menunggu_dekan',
+                            'selesai',
+                        ]);
+                })->paginate(15);
+                break;
+            case 'keabsahan-data':
+                $daftarSurat = SuratKeabsahanData::whereHas('pengajuan', function ($query) use ($layanan) {
+                    $query->where('layanan', $layanan)
+                            ->whereIn('status', [
+                            'menunggu_dekan',
+                            'selesai',
+                        ]);
+                })->paginate(15);
+                break;
             case 'bebas-matakuliah':
                 $daftarSurat = SuratAdministrasi::whereHas('pengajuan', function ($query) use ($layanan) {
                     $query->where('layanan', $layanan)
-                            ->where('status', 'menunggu_dekan');
+                            ->whereIn('status', [
+                            'menunggu_dekan',
+                            'selesai',
+                        ]);
                 })->paginate(15);
                 break;
             case 'pengusulan-tempat-kpi':
                 $daftarSurat = SuratPengusulanTempatKPI::whereHas('pengajuan', function ($query) use ($layanan) {
                     $query->where('layanan', $layanan)
-                            ->where('status', 'menunggu_dekan');
+                        ->whereIn('status', [
+                            'menunggu_dekan',
+                            'selesai',
+                        ]);
                 })->paginate(15);
                 break;
             case 'pembimbing-ta':
                 $daftarSurat = SuratPembimbingTA::whereHas('pengajuan', function ($query) use ($layanan) {
                     $query->where('layanan', $layanan)
-                            ->where('status', 'menunggu_dekan');
+                        ->whereIn('status', [
+                            'menunggu_dekan',
+                            'selesai',
+                        ]);
+                })->paginate(15);
+                break;
+            case 'pembimbing-kpi':
+                $daftarSurat = SuratPembimbingKPI::whereHas('pengajuan', function ($query) use ($layanan) {
+                    $query->where('layanan', $layanan)
+                        ->whereIn('status', [
+                            'menunggu_dekan',
+                            'selesai',
+                    ]);
                 })->paginate(15);
                 break;
             case 'seminar-kpi':
                 $daftarSurat = SuratSeminarKPI::whereHas('pengajuan', function ($query) use ($layanan) {
                     $query->where('layanan', $layanan)
-                            ->where('status', 'menunggu_dekan');
+                        ->whereIn('status', [
+                            'menunggu_dekan',
+                            'selesai',
+                        ]);
                 })->paginate(15);
                 break;
             case 'seminar-proposal':
                 $daftarSurat = SuratSeminarTA::whereHas('pengajuan', function ($query) use ($layanan) {
                     $query->where('layanan', $layanan)
-                            ->where('status', 'menunggu_dekan');
+                        ->whereIn('status', [
+                            'menunggu_dekan',
+                            'selesai',
+                        ]);
                 })->paginate(15);
                 break;
+            case 'izin-penelitian':
+                $daftarSurat = SuratIzinPenelitian::whereHas('pengajuan', function ($query) use ($layanan) {
+                    $query->where('layanan', $layanan)
+                        ->whereIn('status', [
+                        'menunggu_dekan',
+                        'selesai',
+                    ]);
+                })->paginate(15);
+            break;
             case 'seminar-hasil':
                 $daftarSurat = SuratSeminarTA::whereHas('pengajuan', function ($query) use ($layanan) {
                     $query->where('layanan', $layanan)
-                            ->where('status', 'menunggu_dekan');
+                        ->whereIn('status', [
+                            'menunggu_dekan',
+                            'selesai',
+                        ]);
                 })->paginate(15);
                 break;
             case 'seminar-tutup':
                 $daftarSurat = SuratSeminarTA::whereHas('pengajuan', function ($query) use ($layanan) {
                     $query->where('layanan', $layanan)
-                            ->where('status', 'menunggu_dekan');
+                        ->whereIn('status', [
+                            'menunggu_dekan',
+                            'selesai',
+                        ]);
+                })->paginate(15);
+                break;
+            case 'keterangan-lulus':
+                $daftarSurat = SuratKetLulus::whereHas('pengajuan', function ($query) use ($layanan) {
+                    $query->where('layanan', $layanan)
+                        ->whereIn('status', [
+                            'menunggu_dekan',
+                            'selesai',
+                        ]);
                 })->paginate(15);
                 break;
             default:
@@ -143,6 +214,7 @@ class SuratController extends Controller
         $user = auth('dekan')->user();
 
         $ttd = new Tandatangan([
+            'jenis' => 'ttd',
             'nuptk' => $user->nuptk,
             'nama' => $user->nama,
         ]);
