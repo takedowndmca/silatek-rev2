@@ -211,6 +211,11 @@
                         <td class="center" style="width: 10pt">:</td>
                         <td>{{ $pengajuan->prodi }}</td>
                     </tr>
+                    <tr>
+                        <td>Tempat KPI</td>
+                        <td class="center" style="width: 10pt">:</td>
+                        <td>{{ $surat->tempat_kpi }}</td>
+                    </tr>
                 </table>
             </td>
         </tr>

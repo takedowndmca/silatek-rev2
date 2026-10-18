@@ -97,6 +97,10 @@
                                 <h3 id="formSurat-label" class="font-bold text-gray-800">
                                     Buat Surat {{ config('layanan')[$layanan]['label'] }}
                                 </h3>
+
+                                @php
+                                    $dataPembimbingKPI = $pengajuan->data ?? [];
+                                @endphp
                                 <button type="button"
                                     class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-hidden focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none"
                                     aria-label="Close" data-hs-overlay="#formSurat">
@@ -137,6 +141,13 @@
                                         <span class="text-gray-500 text-sm mt-1">Masukkan data mahasiswa dengan format
                                             (Nama / NIM) dan dipisahkan
                                             dengan baris baru</span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="tempatkpiInput"
+                                            class="block text-sm font-medium mb-2">Tempat KPI</label>
+                                        <input value="{{ old('tempat_kpi', data_get($dataPembimbingKPI, 'tempat_kpi')) }}" type="text" id="tempatkpiInput" name="tempat_kpi"
+                                            class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                                            required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="tanggalSuratInput" class="block text-sm font-medium mb-2">Tanggal

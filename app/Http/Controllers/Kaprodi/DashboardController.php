@@ -30,7 +30,10 @@ class DashboardController extends Controller
             'suratPembimbingTA',
             'suratPembimbingKPI',
             'suratIzinPenelitian',
+            'suratKetAktifKuliah',
             'SuratPengusulanTempatKPI',
+            'SuratKetLulus',
+            'suratKeabsahanData',
         ])
         ->latest()
         ->paginate(15);

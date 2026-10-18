@@ -198,25 +198,30 @@
             </td>
         </tr>
         <tr>
-            <td>Ketiga</td>
-            <td class="center" style="width: 10pt">:</td>
-            <td>
+            <td style="vertical-align: top; width: 80px;">Ketiga</td>
+            <td class="center" style="vertical-align: top; width: 10pt;">:</td>
+            <td style="vertical-align: top;">
                 Mahasiswa yang akan melakukan penelitian Tugas Akhir/penulisan Skripsi adalah :
-                <table>
+                <table style="width: 100%; margin-top: 5px; border-collapse: collapse;">
                     <tr>
-                        <td>Nama</td>
-                        <td class="center" style="width: 10pt">:</td>
-                        <td>{{ $pengajuan->nama }}</td>
+                        <td style="width: 120px; padding-bottom: 4px;">Nama</td>
+                        <td class="center" style="width: 10pt; padding-bottom: 4px;">:</td>
+                        <td style="padding-bottom: 4px;">{{ $pengajuan->nama }}</td>
                     </tr>
                     <tr>
-                        <td>NIM</td>
-                        <td class="center" style="width: 10pt">:</td>
-                        <td>{{ nim($pengajuan->nim) }}</td>
+                        <td style="padding-bottom: 4px;">NIM</td>
+                        <td class="center" style="width: 10pt; padding-bottom: 4px;">:</td>
+                        <td style="padding-bottom: 4px;">{{ nim($pengajuan->nim) }}</td>
                     </tr>
                     <tr>
-                        <td>Program Studi</td>
-                        <td class="center" style="width: 10pt">:</td>
-                        <td>{{ $pengajuan->prodi }}</td>
+                        <td style="padding-bottom: 4px;">Program Studi</td>
+                        <td class="center" style="width: 10pt; padding-bottom: 4px;">:</td>
+                        <td style="padding-bottom: 4px;">{{ $pengajuan->prodi }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-bottom: 4px;">Judul Skripsi</td>
+                        <td class="center" style="width: 10pt; padding-bottom: 4px;">:</td>
+                        <td style="padding-bottom: 4px;">{{ $surat->judul_skripsi }}</td>
                     </tr>
                 </table>
             </td>

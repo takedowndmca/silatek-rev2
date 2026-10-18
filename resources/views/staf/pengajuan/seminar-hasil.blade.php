@@ -559,6 +559,11 @@
                                 <h3 id="formSurat-label" class="font-bold text-gray-800">
                                     Buat Surat {{ config('layanan')[$layanan]['label'] }}
                                 </h3>
+
+                                @php
+                                    $pengajuanData = $pengajuan->data ?? [];
+                                @endphp
+                                
                                 <button type="button"
                                     class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-hidden focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none"
                                     aria-label="Close" data-hs-overlay="#formSurat">
@@ -697,7 +702,7 @@
                                     <div class="mb-3">
                                         <label for="judulSkripsiInput" class="block text-sm font-medium mb-2">Judul
                                             Skripsi</label>
-                                        <input type="text" id="judulSkripsiInput" name="judul_skripsi"
+                                        <input value="{{ old('judul_skripsi', data_get($pengajuanData, 'judul_skripsi')) }}" type="text" id="judulSkripsiInput" name="judul_skripsi"
                                             class="py-2.5 sm:py-3 px-4 block w-full border border-gray-200 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                                             required>
                                     </div>

@@ -14,6 +14,7 @@ class SuratPembimbingKPI extends Model
         'nomor',
         'pembimbing',
         'mahasiswa',
+        'tempat_kpi',
         'tanggal_surat',
     ];
 

@@ -221,10 +221,10 @@
                                 class="block text-sm font-medium mb-2"
                             >
 
-                                {{ $berkas->nama }}
+                                {{ $berkas->nama }}, 
 
-                                <span class="text-gray-500">
-                                    (.pdf)
+                                <span class="">
+                                    Format: PDF | Ukuran maksimal: 1 MB
                                 </span>
 
                             </label>
@@ -239,6 +239,13 @@
                                     file:bg-gray-50 file:border-0 file:me-4 file:py-3 file:px-4"
                                 required
                             >
+
+                            {{-- Pesan error upload --}}
+@error('berkas.' . $berkas->id)
+    <p class="text-red-600 text-sm mt-2">
+        {{ $message }}
+    </p>
+@enderror
 
                             @if ($berkas->keterangan)
 

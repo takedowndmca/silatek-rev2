@@ -91,6 +91,14 @@ return [
     'deskripsi' => 'Pengajuan Pembimbing KPI',
     'tipe' => 'pembimbing-kpi',
     'view' => 'pembimbing-kpi',
+    'fields' => [
+      [
+          'name' => 'tempat_kpi',
+          'label' => 'Tempat KPI',
+          'type' => 'text',
+          'required' => true,
+      ],
+    ],
     'persyaratan' => [
       'Pengusulan dari Prodi',
       'KRS Semester Berjalan',
@@ -124,6 +132,14 @@ return [
     'deskripsi' => 'Pengajuan Pembimbing TA',
     'tipe' => 'pembimbing-ta',
     'view' => 'pembimbing-ta',
+    'fields' => [
+      [
+          'name' => 'judul_skripsi',
+          'label' => 'Judul Skripsi',
+          'type' => 'text',
+          'required' => true,
+      ],
+    ],
     'persyaratan' => [
       'Pengusulan Pembimbing dari Prodi',
       'KRS Semester Berjalan',
@@ -138,6 +154,14 @@ return [
     'deskripsi' => 'Pengajuan Seminar Proposal',
     'tipe' => 'seminar-ta',
     'view' => 'seminar-proposal',
+    'fields' => [
+      [
+          'name' => 'judul_skripsi',
+          'label' => 'Judul Skripsi',
+          'type' => 'text',
+          'required' => true,
+      ],
+    ],
     'persyaratan' => [
       'Usulan Jadwal dari Prodi',
       'Lembar Asistensi Bimbingan',
@@ -192,6 +216,14 @@ return [
     'deskripsi' => 'Pengajuan Seminar Hasil',
     'tipe' => 'seminar-ta',
     'view' => 'seminar-hasil',
+    'fields' => [
+      [
+          'name' => 'judul_skripsi',
+          'label' => 'Judul Skripsi',
+          'type' => 'text',
+          'required' => true,
+      ],
+    ],
     'persyaratan' => [
       'Usulan Jadwal Hasil',
       'Notulen Seminar Proposal',
@@ -238,6 +270,14 @@ return [
     'deskripsi' => 'Pengajuan Seminar Tutup',
     'tipe' => 'seminar-ta',
     'view' => 'seminar-tutup',
+    'fields' => [
+      [
+          'name' => 'judul_skripsi',
+          'label' => 'Judul Skripsi',
+          'type' => 'text',
+          'required' => true,
+      ],
+    ],
     'persyaratan' => [
       'Berkas Kelengkapan Tutup',
       'Usulan Jadwal Tutup',

@@ -269,6 +269,7 @@ class SuratController extends Controller
             'nomor' => 'required|string',
             'pembimbing' => 'required|string',
             'mahasiswa' => 'required|string',
+            'tempat_kpi' => 'required|string',
             'tanggal_surat' => 'required|date',
         ]);
 

@@ -24,11 +24,15 @@ class PengajuanController extends Controller
     {
         $daftarPengajuan = Pengajuan::where('layanan', $layanan)
             ->with(['berkas'])
-            ->doesntHave('suratAdministrasi')
             ->doesntHave('suratSeminarTA')
             ->doesntHave('suratSeminarKPI')
             ->doesntHave('suratPembimbingTA')
+            ->doesntHave('suratPembimbingKPI')
+            ->doesntHave('suratIzinPenelitian')
+            ->doesntHave('suratKetAktifKuliah')
             ->doesntHave('SuratPengusulanTempatKPI')
+            ->doesntHave('SuratKetLulus')
+            ->doesntHave('suratKeabsahanData')
             ->orderBy('ditolak', 'asc')
             ->orderBy('created_at', 'desc')
             ->paginate(15);

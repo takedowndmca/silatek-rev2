@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('nomor');
             $table->text('pembimbing');
             $table->text('mahasiswa');
+            $table->text('tempat_kpi');
             $table->text('tanggal_surat');
             $table->enum('penandatangan', ['dekan', 'wakil_dekan'])->default('wakil_dekan');
             $table->timestamps();

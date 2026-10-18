@@ -100,8 +100,17 @@ class PengajuanController extends Controller implements HasMiddleware
 
         $rules = [
             'berkas' => 'required|array',
-            'berkas.*' => 'file|mimes:pdf|max:2048',
+            'berkas.*' => 'file|mimes:pdf|max:1024',
+            // 'berkas.*' => 'file|mimes:pdf|max:2048',
         ];
+
+        $messages = [
+            'berkas.*.required' => 'Berkas wajib diunggah.',
+            'berkas.*.file' => 'File yang diunggah tidak valid.',
+            'berkas.*.mimes' => 'File harus berformat PDF.',
+            'berkas.*.max' => 'Ukuran file maksimal 1 MB.',
+        ];
+
 
 
         /*
@@ -158,7 +167,8 @@ class PengajuanController extends Controller implements HasMiddleware
         |--------------------------------------------------------------------------
         */
 
-        $validated = $request->validate($rules);
+        // $validated = $request->validate($rules);
+        $validated = $request->validate($rules, $messages);
 
 
         /*

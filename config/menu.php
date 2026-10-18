@@ -380,7 +380,7 @@ return [
         [
           'active' => 'pembimbing-kpi',
           'label' => 'Pembimbing KPI',
-          'route' => 'staf.layanan',
+          'route' => 'staf.surat',
           'route_params' => ['layanan' => 'pembimbing-kpi'],
         ],
         [
